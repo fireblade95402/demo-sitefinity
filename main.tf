@@ -58,3 +58,10 @@ module "front-door" {
     default_site_hostname = module.app-service.default_site_hostname
 }
 
+# Call the storage module
+module "storage" {
+    source = "./modules/storage"
+    rg_name = azurerm_resource_group.rg.name
+    location = azurerm_resource_group.rg.location
+}
+
