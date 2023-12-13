@@ -2,23 +2,20 @@
 
 # create the redis cache
 resource "azurerm_redis_cache" "redis" {
-  name                = "sitefinity-redis"
-  resource_group_name = var.rg_name
+  name                = "${var.naming["redis"]}-${var.redis.name}"
+  resource_group_name = "${var.naming["resource-group"]}-${var.resource-groups[var.redis.resource_group_key].name}"
   location            = var.location
-  capacity            = 2
-  family              = "C"
-  sku_name            = "Standard"
-  enable_non_ssl_port = false
-  minimum_tls_version = "1.2"
+  capacity            = var.redis.sku.capacity
+  family              = var.redis.sku.family
+  sku_name            = var.redis.sku.name
+  enable_non_ssl_port = var.redis.enable_non_ssl_port
+  minimum_tls_version = var.redis.minimum_tls_version
 
   redis_configuration {
   }
 }
 
-# output the redis cache id
-output "redis_id" {
-  value = azurerm_redis_cache.redis.id
-}
+
 
 
 

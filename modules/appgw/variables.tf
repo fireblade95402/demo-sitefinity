@@ -6,8 +6,8 @@ variable "resource-groups" {
     description = "(Required) Resource Group of the Resource Groups to be created"  
 }
 
-variable "web-app" {
-    description = "(Required) web-app to be created"  
+variable "appgw" {
+    description = "(Required) appgw to be created"  
 
 }
 

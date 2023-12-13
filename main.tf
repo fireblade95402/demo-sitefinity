@@ -1,67 +1,75 @@
 
-//add the provider
-provider "azurerm" {
-    features {}
+
+#Generic Naming module from CCoE
+module "names" {
+  source   = "./modules/naming"
+  env      = var.environment
+  location = var.location
+  subId    = local.subscription_id
 }
 
-//create the variables
-variable "rg_name" {
-    type = string
-    default = "demo-sitefinity"
-}
-
-variable "location" {
-    type = string
-    default = "uksouth"
-}
-
-//create resource group taking in the variables
+#Resource Group Creation
 resource "azurerm_resource_group" "rg" {
-    name     = var.rg_name
+  for_each = var.resource-groups 
+    name     = "${module.names.standard["resource-group"]}-${each.value.name}"
     location = var.location
 }
 
 
 # Call the networking module
 module "networking" {
+    depends_on = [ azurerm_resource_group.rg ]
     source = "./modules/networking"
-    rg_name = azurerm_resource_group.rg.name
-    location = azurerm_resource_group.rg.location
+    location = var.location
+    resource-groups = var.resource-groups
+    networking = var.networking
+    naming = module.names.standard
 }
 
 # Call the app service module
 module "app-service" {
     source = "./modules/app-service"
-    rg_name = azurerm_resource_group.rg.name
-    location = azurerm_resource_group.rg.location
+    location = var.location
+    resource-groups = var.resource-groups
+    web-app = var.web-app
+    naming = module.names.standard
 }
 
 # Call the sql module
 module "sql" {
     source = "./modules/sql"
-    rg_name = azurerm_resource_group.rg.name
-    location = azurerm_resource_group.rg.location
-}
-
-# Call the redis module
-module "redis" {
-    source = "./modules/redis"
-    rg_name = azurerm_resource_group.rg.name
-    location = azurerm_resource_group.rg.location
-}
-
-# Call Front Door module
-module "front-door" {
-    source = "./modules/front-door"
-    rg_name = azurerm_resource_group.rg.name
-    location = azurerm_resource_group.rg.location
-    default_site_hostname = module.app-service.default_site_hostname
+    location = var.location
+    resource-groups = var.resource-groups
+    sql =var.sql 
+    naming = module.names.standard   
 }
 
 # Call the storage module
 module "storage" {
     source = "./modules/storage"
-    rg_name = azurerm_resource_group.rg.name
-    location = azurerm_resource_group.rg.location
+    location = var.location
+    resource-groups = var.resource-groups
+    storage =var.storage 
+    naming = module.names.standard 
 }
+
+# Call the redis module
+module "redis" {
+    source = "./modules/redis"
+    location = var.location
+    resource-groups = var.resource-groups
+    redis =var.redis 
+    naming = module.names.standard 
+}
+
+# Call the appgw module
+module "appgw" {
+    source = "./modules/appgw"
+    location = var.location
+    resource-groups = var.resource-groups
+    appgw =var.appgw 
+    naming = module.names.standard 
+}
+
+
 

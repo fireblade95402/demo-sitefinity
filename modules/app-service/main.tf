@@ -2,66 +2,63 @@
 
 # create the app service plan
 resource "azurerm_app_service_plan" "appserviceplan" {
-    name                = "sitefinity-appserviceplan"
+    name                = "${var.naming["app-service-plan"]}-${var.web-app.name}"
     location            = var.location
-    resource_group_name = var.rg_name
-    kind                = "Linux"
-    reserved            = true
-
-    sku {
-        tier = "Standard"
-        size = "S1"
+    resource_group_name = "${var.naming["resource-group"]}-${var.resource-groups[var.web-app.resource_group_key].name}"
+    kind                = var.web-app.plan.kind
+    reserved            = var.web-app.plan.reserved
+    dynamic "sku" {
+        for_each = [var.web-app.plan.sku]
+        content {
+            tier = sku.value.tier
+            size = sku.value.size
+        }  
     }
 }
 
 # create the log analytics workspace
 resource "azurerm_log_analytics_workspace" "workspace" {
-  name                = "sitefinity-workspace"
+  name                = "${var.naming["log-analytics-workspace"]}-${var.web-app.name}"
   location            =  var.location
-  resource_group_name = var.rg_name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
+  resource_group_name = azurerm_app_service_plan.appserviceplan.resource_group_name
+  sku                 = var.web-app.log-analytics.sku
+  retention_in_days   = var.web-app.log-analytics.retention_in_days
 }
 
 # create application insights
 resource "azurerm_application_insights" "appinsights" {
-    name                = "sitefinity-appinsights"
+    name                = "${var.naming["app-insights"]}-${var.web-app.name}"
     location            = var.location
-    resource_group_name = var.rg_name
+    resource_group_name = azurerm_app_service_plan.appserviceplan.resource_group_name
     workspace_id        = azurerm_log_analytics_workspace.workspace.id
-    application_type    = "web"
+    application_type    = var.web-app.appinsights.application_type
 }
 
 # create the app service with the app service plan and application insights
 resource "azurerm_app_service" "appservice" {
-    name                = "sitefinity-appservice"
+    name                = "${var.web-app.name}"
     location            = var.location
-    resource_group_name = var.rg_name
+    resource_group_name = azurerm_app_service_plan.appserviceplan.resource_group_name
     app_service_plan_id = azurerm_app_service_plan.appserviceplan.id
-    https_only          = true
-    client_affinity_enabled = false
+    https_only          = var.web-app.https_only
+    client_affinity_enabled = var.web-app.client_affinity_enabled
     app_settings = {
-        "WEBSITE_RUN_FROM_PACKAGE" = "https://sitefinity.blob.core.windows.net/sitefinity/sitefinity.zip"
         "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.appinsights.instrumentation_key
     }
-    site_config {
-        linux_fx_version = "DOCKER|telerik/sitefinity:latest"
-        always_on = true
-    }
 }
 
-# output the app service id, app service plan id and application insights id
-output "appservice_id" {
-    value = azurerm_app_service.appservice.id
-}
+# # output the app service id, app service plan id and application insights id
+# output "appservice_id" {
+#     value = azurerm_app_service.appservice.id
+# }
 
-output "appserviceplan_id" {
-    value = azurerm_app_service_plan.appserviceplan.id
-}
+# output "appserviceplan_id" {
+#     value = azurerm_app_service_plan.appserviceplan.id
+# }
 
-output "appinsights_id" {
-    value = azurerm_application_insights.appinsights.id
-}
+# output "appinsights_id" {
+#     value = azurerm_application_insights.appinsights.id
+# }
 
 output "default_site_hostname" {
     value = azurerm_app_service.appservice.default_site_hostname
