@@ -11,6 +11,10 @@ variable "sql" {
 
 }
 
+variable "keyvault" {
+    description = "(Required) keyvault to be created"  
+}
+
 variable "naming" {
     description = "(Required) Naming to be created"  
 

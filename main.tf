@@ -1,5 +1,4 @@
 
-
 #Generic Naming module from CCoE
 module "names" {
   source   = "./modules/naming"
@@ -28,6 +27,7 @@ module "networking" {
 
 # Call the app service module
 module "app-service" {
+    depends_on = [ module.networking, module.sql, module.storage, module.redis ]
     source = "./modules/app-service"
     location = var.location
     resource-groups = var.resource-groups
@@ -37,15 +37,18 @@ module "app-service" {
 
 # Call the sql module
 module "sql" {
+    depends_on = [ module.networking ]
     source = "./modules/sql"
     location = var.location
     resource-groups = var.resource-groups
-    sql =var.sql 
+    sql =var.sql
+    keyvault = var.keyvault 
     naming = module.names.standard   
 }
 
 # Call the storage module
 module "storage" {
+    depends_on = [ module.networking ]
     source = "./modules/storage"
     location = var.location
     resource-groups = var.resource-groups
@@ -55,6 +58,7 @@ module "storage" {
 
 # Call the redis module
 module "redis" {
+    depends_on = [ module.networking ]
     source = "./modules/redis"
     location = var.location
     resource-groups = var.resource-groups
@@ -62,14 +66,15 @@ module "redis" {
     naming = module.names.standard 
 }
 
-# Call the appgw module
-module "appgw" {
-    source = "./modules/appgw"
-    location = var.location
-    resource-groups = var.resource-groups
-    appgw =var.appgw 
-    naming = module.names.standard 
-}
+# Call the appgw module -tbc
+# module "appgw" {
+#     source = "./modules/appgw"
+#     location = var.location
+#     resource-groups = var.resource-groups
+#     appgw =var.appgw 
+#     networking = var.networking
+#     naming = module.names.standard 
+# }
 
 
 

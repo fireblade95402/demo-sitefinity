@@ -11,6 +11,11 @@ variable "appgw" {
 
 }
 
+variable "networking" {
+    description = "(Required) network to be created"  
+
+}
+
 variable "naming" {
     description = "(Required) Naming to be created"  
 

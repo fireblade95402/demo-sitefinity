@@ -1,6 +1,13 @@
 environment = "dev"
 location    = "uksouth"
 
+// Reference existing keyvault
+keyvault = {
+  name = "mykeyvaultmwg"
+  resource_group_name = "Shared"
+}
+
+
 resource-groups = {
   sitefinity = {
     name = "sitefinity"
@@ -43,8 +50,8 @@ web-app = {
   https_only         = true
   client_affinity_enabled = true
   plan = {
-    kind = "Linux"
-    reserved = true
+    kind = "Windows"
+    reserved = false
     sku = {
       tier = "Standard"
       size = "S1"
@@ -63,6 +70,8 @@ sql = {
     name               = "sitefinity-mwg"
     resource_group_key = "sitefinity"
     version            = "12.0"
+    admin_login_kv_secret_name = "adminsqllogin"
+    admin_pwd_kv_secret_name = "adminsqlpwd"
     database = {
       name = "sitefinity"
       collation = "SQL_Latin1_General_CP1_CI_AS"
@@ -111,11 +120,11 @@ appgw = {
     }
     gateway_ip_config = {
         name = "sitefinity-mwg"
-        subnet_id = data.azurerm_subnet.frontendSubnet.id
+        subnet_key = "frontend"
     }
     frontend_port = {
         name = "sitefinity-mwg"
-        port = 443
+        port = 80
     }
     frontend_ip_config = {
         name = "sitefinity-mwg"
@@ -131,13 +140,15 @@ appgw = {
         port = 80
         protocol = "Http"
         request_timeout = 20
+        path = "/"
     }
-    https_listener = {
+    http_listener = {
         name = "sitefinity-mwg"
         frontend_port_name = "sitefinity-mwg"
         frontend_ip_configuration_name = "sitefinity-mwg"
         ssl_certificate_name = "sitefinity-mwg"
         require_server_name_indication = true
+        protocol = "Http"
     }
     request_routing_rule = {
         name = "sitefinity-mwg"
@@ -149,7 +160,7 @@ appgw = {
     public_ip_address = {
         name = "sitefinity-mwg"
         sku = "Standard"
-        public_ip_address_allocation = "Dynamic"
+        allocation_method = "Static"
     }
 }
 

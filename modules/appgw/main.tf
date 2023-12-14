@@ -2,11 +2,19 @@
 
 #create public ip address for the application gateway
 resource "azurerm_public_ip" "publicip" {
-  name                = "${var.naming["public-ip"]}-${var.appgw.name}"
+  name                = "${var.naming["public-ip-address"]}-${var.appgw.name}"
   resource_group_name = "${var.naming["resource-group"]}-${var.resource-groups[var.appgw.resource_group_key].name}"
   location            = var.location
-  allocation_method   = var.appgw.public_ip.allocation_method
-  sku                 = var.appgw.public_ip.sku
+  allocation_method   = var.appgw.public_ip_address.allocation_method
+  sku                 = var.appgw.public_ip_address.sku
+}
+
+# get exists subnet id
+data "azurerm_subnet" "subnets" {
+  for_each = var.networking.vnet.subnets
+  name                 = each.value.name
+  virtual_network_name = "${var.naming["virtual-network"]}-${var.networking.vnet.name}"
+  resource_group_name  = "${var.naming["resource-group"]}-${var.resource-groups[var.networking.vnet.resource_group_key].name}"
 }
 
 resource "azurerm_application_gateway" "appgw" {
@@ -19,15 +27,15 @@ resource "azurerm_application_gateway" "appgw" {
     capacity = var.appgw.sku.capacity
   }
   gateway_ip_configuration {
-    name      = var.appgw.gateway_ip_configuration.name
-    subnet_id = data.azurerm_subnet.subnets[var.appgw.subnet_key].id
+    name      = var.appgw.gateway_ip_config.name
+    subnet_id = data.azurerm_subnet.subnets[var.appgw.gateway_ip_config.subnet_key].id
   }
   frontend_port {
     name = var.appgw.frontend_port.name
     port = var.appgw.frontend_port.port
   }
   frontend_ip_configuration {
-    name                 = var.appgw.frontend_ip_configuration.name
+    name                 = var.appgw.frontend_ip_config.name
     public_ip_address_id = azurerm_public_ip.publicip.id
   }
   backend_address_pool {
@@ -42,9 +50,9 @@ resource "azurerm_application_gateway" "appgw" {
     request_timeout       = var.appgw.backend_http_settings.request_timeout
   }
   http_listener {
-    name                           = var.appgw
-    frontend_ip_configuration_name = var.appgw.frontend_ip_configuration.name
-    frontend_port_name             = var.appgw.frontend_port.name
+    name                           = var.appgw.http_listener.name
+    frontend_ip_configuration_name = var.appgw.http_listener.name
+    frontend_port_name             = var.appgw.http_listener.name
     protocol                       = var.appgw.http_listener.protocol
   }
   request_routing_rule {

@@ -45,6 +45,8 @@ resource "azurerm_app_service" "appservice" {
     app_settings = {
         "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.appinsights.instrumentation_key
     }
+    site_config {
+    }
 }
 
 # # output the app service id, app service plan id and application insights id
