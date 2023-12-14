@@ -61,6 +61,7 @@ resource "azurerm_application_gateway" "appgw" {
     http_listener_name         = var.appgw.http_listener.name
     backend_address_pool_name  = var.appgw.backend_address_pool.name
     backend_http_settings_name = var.appgw.backend_http_settings.name
+    priority = 
   }
 }
 
