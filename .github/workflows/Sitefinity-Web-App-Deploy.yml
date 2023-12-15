@@ -27,11 +27,12 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }} 
-      
+          
       # Run dotnet build and publish
       - name: dotnet build and publish
         run: |
            cd app/SitefinityWebApp
+           dotnet nuget add source https://nuget.sitefinity.com/nuget --name Sitefinity
            dotnet restore
            dotnet build --configuration Release
            dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
