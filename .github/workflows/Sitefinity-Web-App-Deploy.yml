@@ -31,7 +31,7 @@ jobs:
       # Run dotnet build and publish
       - name: dotnet build and publish
         run: |
-           cd /app/SitefinityWebApp
+           cd app/SitefinityWebApp
            dotnet restore
            dotnet build --configuration Release
            dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
