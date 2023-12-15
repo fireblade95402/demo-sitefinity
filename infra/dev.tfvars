@@ -10,9 +10,8 @@ keyvault = {
 
 resource-groups = {
   sitefinity = {
-    name = "sitefinity"
+    name = "demo-sitefinity"
   }
-
 }
 
 networking = {
@@ -45,7 +44,7 @@ networking = {
 }
 
 web-app = {
-  name               = "sitefinity-mwg"
+  name               = "sitefinity2-mwg"
   resource_group_key = "sitefinity"
   https_only         = true
   client_affinity_enabled = true
