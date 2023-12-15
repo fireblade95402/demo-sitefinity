@@ -4,7 +4,7 @@
 resource "azurerm_app_service_plan" "appserviceplan" {
     name                = "${var.naming["app-service-plan"]}-${var.web-app.name}"
     location            = var.location
-    resource_group_name = "${var.naming["resource-group"]}-${var.resource-groups[var.web-app.resource_group_key].name}"
+    resource_group_name = "${var.resource-groups[var.web-app.resource_group_key].name}"
     kind                = var.web-app.plan.kind
     reserved            = var.web-app.plan.reserved
     dynamic "sku" {
@@ -44,8 +44,14 @@ resource "azurerm_app_service" "appservice" {
     client_affinity_enabled = var.web-app.client_affinity_enabled
     app_settings = {
         "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.appinsights.instrumentation_key
+        "sf-env:ConnectionStringName" = "defaultConnection"
+        "sf-env:ConnectionStringParams:defaultConnection" = "Backend=azure"
+
+        # add sql connection string
+        "defaultConnection" = var.sql_connectionstring
     }
     site_config {
+
     }
 }
 

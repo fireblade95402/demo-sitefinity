@@ -19,7 +19,7 @@ data "azurerm_key_vault_secret" "adminsqlpwd" {
 # create the sql server
 resource "azurerm_sql_server" "sqlserver" {
     name                         = "${var.naming["sql-server"]}-${var.sql.name}"
-    resource_group_name          = "${var.naming["resource-group"]}-${var.resource-groups[var.sql.resource_group_key].name}"
+    resource_group_name          = "${var.resource-groups[var.sql.resource_group_key].name}"
     location                     = var.location
     version                      = var.sql.version
     administrator_login          = data.azurerm_key_vault_secret.adminsqllogin.value
@@ -37,9 +37,7 @@ resource "azurerm_sql_database" "sqldb" {
     max_size_gb         = var.sql.database.max_size_gb
 }
 
-output "connection-string" {
-    value = azurerm_sql_database.sqldb.connection_strings[0]
-  
+# output connectionstring for sql database to be used in app service
+output "sql_connectionstring" {
+    value = "Server=tcp:${azurerm_sql_server.sqlserver.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.sqldb.name};Persist Security Info=False;User ID=${data.azurerm_key_vault_secret.adminsqllogin.value};Password=${data.azurerm_key_vault_secret.adminsqlpwd.value};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 }
-
-

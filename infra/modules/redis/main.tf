@@ -3,7 +3,7 @@
 # create the redis cache
 resource "azurerm_redis_cache" "redis" {
   name                = "${var.naming["redis"]}-${var.redis.name}"
-  resource_group_name = "${var.naming["resource-group"]}-${var.resource-groups[var.redis.resource_group_key].name}"
+  resource_group_name = "${var.resource-groups[var.redis.resource_group_key].name}"
   location            = var.location
   capacity            = var.redis.sku.capacity
   family              = var.redis.sku.family

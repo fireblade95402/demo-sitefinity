@@ -6,7 +6,7 @@ resource "azurerm_virtual_network" "vnet" {
     name                = "${var.naming["virtual-network"]}-${var.networking.vnet.name}"
     address_space       = var.networking.vnet.address_space
     location            = var.location
-    resource_group_name = "${var.naming["resource-group"]}-${var.resource-groups[var.networking.vnet.resource_group_key].name}"
+    resource_group_name = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
 }
 
 # create the subnets

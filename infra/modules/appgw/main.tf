@@ -3,7 +3,7 @@
 #create public ip address for the application gateway
 resource "azurerm_public_ip" "publicip" {
   name                = "${var.naming["public-ip-address"]}-${var.appgw.name}"
-  resource_group_name = "${var.naming["resource-group"]}-${var.resource-groups[var.appgw.resource_group_key].name}"
+  resource_group_name = "${var.resource-groups[var.appgw.resource_group_key].name}"
   location            = var.location
   allocation_method   = var.appgw.public_ip_address.allocation_method
   sku                 = var.appgw.public_ip_address.sku
@@ -14,12 +14,12 @@ data "azurerm_subnet" "subnets" {
   for_each = var.networking.vnet.subnets
   name                 = each.value.name
   virtual_network_name = "${var.naming["virtual-network"]}-${var.networking.vnet.name}"
-  resource_group_name  = "${var.naming["resource-group"]}-${var.resource-groups[var.networking.vnet.resource_group_key].name}"
+  resource_group_name  = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
 }
 
 resource "azurerm_application_gateway" "appgw" {
   name                = "${var.naming["application-gateway"]}-${var.appgw.name}"
-  resource_group_name = "${var.naming["resource-group"]}-${var.resource-groups[var.appgw.resource_group_key].name}"
+  resource_group_name = "${var.resource-groups[var.appgw.resource_group_key].name}"
   location            = var.location
   sku {
     name     = var.appgw.sku.name

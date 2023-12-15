@@ -11,6 +11,11 @@ variable "web-app" {
 
 }
 
+variable "sql_connectionstring" {
+    description = "(Required) sql_connectionstring to be created"  
+
+}
+
 variable "naming" {
     description = "(Required) Naming to be created"  
 
