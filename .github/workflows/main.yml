@@ -1,0 +1,16 @@
+name: Deploy Terraform Infra to Azure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Login to Azure
+        uses: Azure/login@v1.5.1
+        with:
+          auth: ${{AZURE_CREDENTIALS}}         
+
+      
