@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitefinityWebApp", "SitefinityWebApp\SitefinityWebApp.csproj", "{6ACF45D7-7C9E-4903-8B78-98D16D5E3E03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renderer", "Renderer\Renderer.csproj", "{FA5F550B-5805-4587-AC40-941F6C6C0A63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6ACF45D7-7C9E-4903-8B78-98D16D5E3E03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ACF45D7-7C9E-4903-8B78-98D16D5E3E03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ACF45D7-7C9E-4903-8B78-98D16D5E3E03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ACF45D7-7C9E-4903-8B78-98D16D5E3E03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA5F550B-5805-4587-AC40-941F6C6C0A63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA5F550B-5805-4587-AC40-941F6C6C0A63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA5F550B-5805-4587-AC40-941F6C6C0A63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA5F550B-5805-4587-AC40-941F6C6C0A63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3548881D-C210-483E-A6DD-1147702189C4}
+	EndGlobalSection
+EndGlobal
