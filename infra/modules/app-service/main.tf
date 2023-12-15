@@ -46,11 +46,13 @@ resource "azurerm_app_service" "appservice" {
         "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.appinsights.instrumentation_key
         "sf-env:ConnectionStringName" = "defaultConnection"
         "sf-env:ConnectionStringParams:defaultConnection" = "Backend=azure"
-
-        # add sql connection string
-        "defaultConnection" = var.sql_connectionstring
     }
     site_config {
+    }
+    connection_string {
+        name  = "defaultConnection"
+        type  = "SQLAzure"
+        value = var.sql_connectionstring
     }
 }
 
