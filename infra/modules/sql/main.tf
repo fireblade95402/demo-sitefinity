@@ -37,4 +37,9 @@ resource "azurerm_sql_database" "sqldb" {
     max_size_gb         = var.sql.database.max_size_gb
 }
 
+output "connection-string" {
+    value = azurerm_sql_database.sqldb.connection_strings[0]
+  
+}
+
 
