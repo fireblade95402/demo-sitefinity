@@ -33,7 +33,7 @@ jobs:
         run: |
           dotnet restore
           dotnet build --configuration Release
-          dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/SitefinityWebApp' 
+          dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/SitefinityWebApp/' 
       - name: azure-resource-login
         uses: Azure/azure-resource-login-action@v1.0.0
         with:
