@@ -15,6 +15,7 @@ module "names" {
 # }
 
 
+
 # Call the networking module
 module "networking" {
     source = "./modules/networking"
@@ -65,6 +66,7 @@ module "sql" {
 #     redis =var.redis 
 #     naming = module.names.standard 
 # }
+
 
 # Call the appgw module -tbc
 # module "appgw" {

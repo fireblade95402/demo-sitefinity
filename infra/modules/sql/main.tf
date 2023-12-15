@@ -37,7 +37,9 @@ resource "azurerm_sql_database" "sqldb" {
     max_size_gb         = var.sql.database.max_size_gb
 }
 
+
 # output connectionstring for sql database to be used in app service
 output "sql_connectionstring" {
     value = "Server=tcp:${azurerm_sql_server.sqlserver.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.sqldb.name};Persist Security Info=False;User ID=${data.azurerm_key_vault_secret.adminsqllogin.value};Password=${data.azurerm_key_vault_secret.adminsqlpwd.value};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 }
+

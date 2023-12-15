@@ -12,7 +12,6 @@ resource-groups = {
   sitefinity = {
     name = "demo-sitefinity"
   }
-
 }
 
 networking = {

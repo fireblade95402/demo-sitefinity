@@ -51,7 +51,6 @@ resource "azurerm_app_service" "appservice" {
         "defaultConnection" = var.sql_connectionstring
     }
     site_config {
-
     }
 }
 
