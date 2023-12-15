@@ -56,6 +56,13 @@ resource "azurerm_app_service" "appservice" {
     }
 }
 
+# resource "azurerm_app_service_source_control" "deploy" {
+#   app_id   = azurerm_app_service.appservice.id
+#   repo_url = "https://github.com/fireblade95402/demo-sitefinity/app"
+#   branch   = "master"
+
+# }
+
 # # output the app service id, app service plan id and application insights id
 # output "appservice_id" {
 #     value = azurerm_app_service.appservice.id
