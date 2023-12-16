@@ -46,6 +46,7 @@ resource "azurerm_app_service" "appservice" {
         "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.appinsights.instrumentation_key
         "sf-env:ConnectionStringName" = "defaultConnection"
         "sf-env:ConnectionStringParams:defaultConnection" = "Backend=azure"
+        "test" = "test"
     }
     site_config {
     }
