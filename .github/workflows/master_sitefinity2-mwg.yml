@@ -44,6 +44,11 @@ jobs:
         with:
           name: ASP-app
       
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -51,4 +56,3 @@ jobs:
           app-name: 'sitefinity2-mwg'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_49F6047AB8E84C6091C5ED3A3E61648D }}
