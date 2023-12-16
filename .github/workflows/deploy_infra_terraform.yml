@@ -14,9 +14,9 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          path: infra
+          sparse-checkout: infra
 
 
       - name: Setup Terraform
