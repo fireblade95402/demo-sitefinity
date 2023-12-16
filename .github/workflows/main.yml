@@ -9,8 +9,37 @@ jobs:
 
     steps:
       - name: Login to Azure
-        uses: Azure/login@v1.5.1
+        uses: azure/login@v1
         with:
-          auth: ${{AZURE_CREDENTIALS}}         
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.7
+      
+      #change folder to infra
+      - name: Change Directory
+        run: cd infra
+      
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -out tfplan --var-file=./dev.tfvars
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan --var-file=./dev.tfvars
+
+      - name: Terraform Output
+        run: terraform output
+
+        
+
+
+       
 
       
