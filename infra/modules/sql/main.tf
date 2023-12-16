@@ -24,6 +24,17 @@ resource "azurerm_sql_server" "sqlserver" {
     version                      = var.sql.version
     administrator_login          = data.azurerm_key_vault_secret.adminsqllogin.value
     administrator_login_password = data.azurerm_key_vault_secret.adminsqlpwd.value
+
+}
+
+# create the firewall rule for sql server
+resource "azurerm_sql_firewall_rule" "sqlfirewall" {
+    name                = "AllowAllWindowsAzureIps"
+    resource_group_name = azurerm_sql_server.sqlserver.resource_group_name
+    server_name         = azurerm_sql_server.sqlserver.name
+    start_ip_address    = "0.0.0.0"
+    end_ip_address      = "0.0.0.0"
+    depends_on = [ azurerm_sql_database.sqldb ]
 }
 
 # create the sql database
