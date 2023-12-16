@@ -26,23 +26,22 @@ jobs:
 
       - name: List Files in Directory
         run: ls -R
-      
-      #change folder to infra
-      - name: Change Directory
-        run: cd infra
-      
+    
       - name: Terraform Init
         run: terraform init
+        working-directory: infra
 
       - name: Terraform Plan
         run: terraform plan --var-file=./dev.tfvars
+        working-directory: infra
 
       - name: Terraform Apply
         run: terraform apply -auto-approve --var-file=./dev.tfvars
+        working-directory: infra
 
       - name: Terraform Output
         run: terraform output
-
+        working-directory: infra
         
 
 
