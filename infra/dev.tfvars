@@ -29,17 +29,17 @@ networking = {
         address_prefix = ["10.0.2.0/24"]
       }
     }
-    # private_dns_zones = {
-    #   web-app = {
-    #     name   = "web-app.local"
-    #     domain = "privatelink.azurewebsites.net"
-    #   },
-    #   sql = {
-    #     name   = "sql.local"
-    #     domain = "privatelink.database.windows.net"
-    #   }
+    private_dns_zones = {
+      # web-app = {
+      #   name   = "web-app.local"
+      #   domain = "privatelink.azurewebsites.net"
+      # },
+      # sql = {
+      #   name   = "sql.local"
+      #   domain = "privatelink.database.windows.net"
+      # }
 
-    # }
+    }
   }
 }
 
