@@ -29,10 +29,10 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out tfplan --var-file=./dev.tfvars
+        run: terraform plan --var-file=./dev.tfvars
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan --var-file=./dev.tfvars
+        run: terraform apply -auto-approve --var-file=./dev.tfvars
 
       - name: Terraform Output
         run: terraform output
