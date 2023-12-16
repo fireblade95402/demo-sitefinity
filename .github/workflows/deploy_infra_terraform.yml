@@ -15,11 +15,17 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: infra
+
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 0.14.7
+          terraform_version: 0.15.3
+
+      - name: List Files in Directory
+        run: ls -R
       
       #change folder to infra
       - name: Change Directory
