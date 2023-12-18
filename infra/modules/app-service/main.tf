@@ -1,5 +1,14 @@
 # create a web app for the sitefinity app to sit in with a private endpoint
 
+
+# get exists subnet id
+data "azurerm_subnet" "subnets" {
+  for_each = var.networking.vnet.subnets
+  name                 = each.value.name
+  virtual_network_name = "${var.naming["virtual-network"]}-${var.networking.vnet.name}"
+  resource_group_name  = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
+}
+
 # create the app service plan
 resource "azurerm_app_service_plan" "appserviceplan" {
     name                = "${var.naming["app-service-plan"]}-${var.web-app.name}"
@@ -47,13 +56,31 @@ resource "azurerm_app_service" "appservice" {
         "sf-env:ConnectionStringName" = "defaultConnection"
         "sf-env:ConnectionStringParams:defaultConnection" = "Backend=azure"
     }
-    site_config {
-        dotnet_framework_version = "v4.0"
+    dynamic "site_config" {
+      for_each = [var.web-app.site_config]
+        content {
+            dotnet_framework_version  = site_config.value.dotnet_framework_version
+
+        }
     }
     connection_string {
         name  = "defaultConnection"
         type  = "SQLAzure"
         value = var.sql_connectionstring
+    }
+}
+
+#create private endpoint for app service to connect to sql server
+resource "azurerm_private_endpoint" "privateendpoint" {
+    name                = "${var.naming["private-endpoint"]}-${var.web-app.name}"
+    location            = var.location
+    resource_group_name = azurerm_app_service_plan.appserviceplan.resource_group_name
+    subnet_id           = data.azurerm_subnet.subnets[var.web-app.subnet_key].id
+    private_service_connection {
+        name                           = "${var.web-app.name}-privateconnection"
+        private_connection_resource_id = azurerm_app_service.appservice.id
+        subresource_names              = ["sites"]
+        is_manual_connection = false
     }
 }
 
