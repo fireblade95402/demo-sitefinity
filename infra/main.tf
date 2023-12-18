@@ -7,12 +7,12 @@ module "names" {
   subId    = local.subscription_id
 }
 
-# #Resource Group Creation
-# resource "azurerm_resource_group" "rg" {
-#   for_each = var.resource-groups 
-#     name     = "${each.value.name}"
-#     location = var.location
-# }
+#Resource Group Creation
+resource "azurerm_resource_group" "rg" {
+  for_each = var.resource-groups 
+    name     = "${each.value.name}"
+    location = var.location
+}
 
 
 
