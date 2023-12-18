@@ -10,7 +10,7 @@ keyvault = {
 
 resource-groups = {
   sitefinity = {
-    name = "demo-sitefinity"
+    name = "demo-sitefinity-poc"
   }
 }
 
