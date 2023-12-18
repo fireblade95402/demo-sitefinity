@@ -18,6 +18,7 @@ resource "azurerm_resource_group" "rg" {
 
 # Call the networking module
 module "networking" {
+    depends_on = [ azurerm_resource_group.rg ]
     source = "./modules/networking"
     location = var.location
     resource-groups = var.resource-groups
