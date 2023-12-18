@@ -44,7 +44,7 @@ networking = {
 }
 
 web-app = {
-  name               = "sitefinity2-mwg"
+  name               = "sitefinity-poc-mwg"
   resource_group_key = "sitefinity"
   https_only         = true
   client_affinity_enabled = true
@@ -66,7 +66,7 @@ web-app = {
 }
 
 sql = {
-    name               = "sitefinity-mwg"
+    name               = "sitefinity-poc-mwg"
     resource_group_key = "sitefinity"
     version            = "12.0"
     admin_login_kv_secret_name = "adminsqllogin"
