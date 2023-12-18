@@ -44,7 +44,7 @@ networking = {
 }
 
 web-app = {
-  name               = "sitefinity"
+  name               = "sitefinity-mwg"
   resource_group_key = "sitefinity"
   https_only         = true
   client_affinity_enabled = true
