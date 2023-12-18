@@ -32,6 +32,7 @@ module "app-service" {
     location = var.location
     resource-groups = var.resource-groups
     web-app = var.web-app
+    networking = var.networking
     sql_connectionstring = module.sql.sql_connectionstring
     naming = module.names.standard
 }

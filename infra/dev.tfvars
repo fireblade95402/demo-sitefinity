@@ -30,14 +30,14 @@ networking = {
       }
     }
     private_dns_zones = {
-      # web-app = {
-      #   name   = "web-app.local"
-      #   domain = "privatelink.azurewebsites.net"
-      # },
-      # sql = {
-      #   name   = "sql.local"
-      #   domain = "privatelink.database.windows.net"
-      # }
+      web-app = {
+        name   = "web-app.local"
+        domain = "privatelink.azurewebsites.net"
+      },
+      sql = {
+        name   = "sql.local"
+        domain = "privatelink.database.windows.net"
+      }
 
     }
   }
@@ -55,6 +55,10 @@ web-app = {
       tier = "Standard"
       size = "S1"
     }
+  }
+  subnet_key = "frontend"
+  site_config = {
+    dotnet_framework_version = "v4.0"
   }
   log-analytics = {
     sku = "PerGB2018"
