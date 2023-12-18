@@ -10,7 +10,7 @@ keyvault = {
 
 resource-groups = {
   sitefinity = {
-    name = "demo-sitefinity-poc"
+    name = "demo-sitefinity-test"
   }
 }
 
@@ -70,7 +70,7 @@ web-app = {
 }
 
 sql = {
-    name               = "sitefinity-poc-mwg"
+    name               = "sitefinity"
     resource_group_key = "sitefinity"
     version            = "12.0"
     admin_login_kv_secret_name = "adminsqllogin"
