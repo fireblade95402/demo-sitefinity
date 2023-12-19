@@ -51,7 +51,10 @@ resource "azurerm_app_service" "appservice" {
     app_service_plan_id = azurerm_app_service_plan.appserviceplan.id
     https_only          = var.web-app.https_only
     client_affinity_enabled = var.web-app.client_affinity_enabled
-    
+    # identity {
+    #     type = "SystemAssigned"
+
+    # }
     app_settings = {
         "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.appinsights.instrumentation_key
         "sf-env:ConnectionStringName" = "defaultConnection"
@@ -116,6 +119,10 @@ output "default_site_hostname" {
     value = azurerm_app_service.appservice.default_site_hostname
 }
 
+# output "identity" {
+#     value = azurerm_app_service.appservice.identity
+#     sensitive = true
+# }   
 
 
 

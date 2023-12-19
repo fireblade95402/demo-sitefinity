@@ -30,20 +30,24 @@ resource "azurerm_sql_server" "sqlserver" {
     resource_group_name          = "${var.resource-groups[var.sql.resource_group_key].name}"
     location                     = var.location
     version                      = var.sql.version
+    # use an entra user for the administator login
+    
+
+
     administrator_login          = data.azurerm_key_vault_secret.adminsqllogin.value
     administrator_login_password = data.azurerm_key_vault_secret.adminsqlpwd.value
 
 }
 
-# create the firewall rule for sql server
-resource "azurerm_sql_firewall_rule" "sqlfirewall" {
-    name                = "AllowAllWindowsAzureIps"
-    resource_group_name = azurerm_sql_server.sqlserver.resource_group_name
-    server_name         = azurerm_sql_server.sqlserver.name
-    start_ip_address    = "0.0.0.0"
-    end_ip_address      = "0.0.0.0"
-    depends_on = [ azurerm_sql_database.sqldb ]
-}
+# # create the firewall rule for sql server
+# resource "azurerm_sql_firewall_rule" "sqlfirewall" {
+#     name                = "AllowAllWindowsAzureIps"
+#     resource_group_name = azurerm_sql_server.sqlserver.resource_group_name
+#     server_name         = azurerm_sql_server.sqlserver.name
+#     start_ip_address    = "0.0.0.0"
+#     end_ip_address      = "0.0.0.0"
+#     depends_on = [ azurerm_sql_database.sqldb ]
+# }
 
 #create private endpoint for app service to connect to sql server
 resource "azurerm_private_endpoint" "privateendpoint" {
