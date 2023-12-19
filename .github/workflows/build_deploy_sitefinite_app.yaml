@@ -53,6 +53,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'sitefinity-private-mwg'
+          app-name: 'sitefinity-private-4-mwg'
           slot-name: 'Production'
           package: .
