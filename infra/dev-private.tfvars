@@ -10,7 +10,7 @@ keyvault = {
 
 resource-groups = {
   sitefinity = {
-    name = "demo-sitefinity-private-4"
+    name = "demo-sitefinity-private"
   }
 }
 
@@ -55,7 +55,7 @@ networking = {
 }
 
 web-app = {
-  name                    = "sitefinity-private-4-mwg"
+  name                    = "sitefinity-private-mwg"
   resource_group_key      = "sitefinity"
   https_only              = true
   client_affinity_enabled = true
@@ -82,7 +82,7 @@ web-app = {
 }
 
 sql = {
-  name                       = "sitefinity-private-4"
+  name                       = "sitefinity-private"
   resource_group_key         = "sitefinity"
   version                    = "12.0"
   pep_subnet_key             = "integration"
