@@ -15,6 +15,10 @@ variable "keyvault" {
     description = "(Required) keyvault to be created"  
 }
 
+variable "networking" {
+    description = "(Required) Networking to be created"  
+}
+
 variable "naming" {
     description = "(Required) Naming to be created"  
 

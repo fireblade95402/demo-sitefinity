@@ -12,7 +12,9 @@
 		"vscode": {
 			"extensions": [
 				"ms-dotnettools.csdevkit",
-				"github.vscode-github-actions"
+				"github.vscode-github-actions",
+				"GitHub.copilot",
+				"GitHub.copilot-chat"
 			]
 		}
 	}

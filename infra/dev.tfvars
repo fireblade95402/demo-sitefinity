@@ -1,3 +1,10 @@
+backend-state = {
+    resource_group_name  = "Shared"
+    storage_account_name = "sharedstoremwg"
+    container_name       = "sitefinitytfstate"
+    key                  = "terraform.tfstate"
+}
+
 environment = "dev"
 location    = "uksouth"
 

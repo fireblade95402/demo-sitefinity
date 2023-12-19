@@ -40,3 +40,4 @@ variable "redis" {
 variable "appgw" {
     description = "(Required) appgw to be created"  
 }
+

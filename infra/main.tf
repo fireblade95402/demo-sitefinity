@@ -45,6 +45,7 @@ module "sql" {
     location = var.location
     resource-groups = var.resource-groups
     sql =var.sql
+    networking = var.networking
     keyvault = var.keyvault 
     naming = module.names.standard   
 }
