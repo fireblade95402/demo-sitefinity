@@ -36,7 +36,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'MCAPS-INTERNAL'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
