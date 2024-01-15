@@ -1,5 +1,10 @@
 # create a web app for the sitefinity app to sit in with a private endpoint
 
+# Get VNET
+data "azurerm_virtual_network" "vnet" {
+  name = var.networking.vnet.name
+   resource_group_name  = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
+}
 
 # get exists subnet id
 data "azurerm_subnet" "subnets" {
@@ -94,6 +99,25 @@ resource "azurerm_private_endpoint" "privateendpoint" {
         is_manual_connection = false
     }
 }
+
+
+# create the private dns zones
+resource "azurerm_private_dns_zone" "privatedns" {
+    name                = "privatelink.azurewebsites.net"
+    resource_group_name =  azurerm_app_service_plan.appserviceplan.resource_group_name
+}
+
+# create the private dns zone links
+resource "azurerm_private_dns_zone_virtual_network_link" "privatednslink" {
+    depends_on = [ azurerm_private_dns_zone.privatedns ]
+        name                  = {azurerm_app_service.appservice.name}.dnslink
+        resource_group_name   = azurerm_app_service_plan.appserviceplan.resource_group_name
+        private_dns_zone_name = azurerm_private_dns_zone.privatedns.name
+        virtual_network_id    = data.azurerm_virtual_network.vnet.id
+        registration_enabled = false
+}
+
+
 
 # resource "azurerm_app_service_source_control" "deploy" {
 #   app_id   = azurerm_app_service.appservice.id
