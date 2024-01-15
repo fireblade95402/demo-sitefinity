@@ -9,7 +9,7 @@ terraform {
   # Update this block with the location of your terraform state file
   backend "azurerm" {
     resource_group_name  = "Shared"
-    storage_account_name = "sharedstoremwg"
+    storage_account_name = "myfilesmwg"
     container_name       = "sitefinitytfstate"
     key                  = "terraform-private.tfstate"
   }
