@@ -71,6 +71,7 @@ module "sql" {
 
 # Call the appgw module -tbc
 module "appgw" {
+    depends_on = [ module.networking, module.app-service ]
     source = "./modules/appgw"
     location = var.location
     resource-groups = var.resource-groups
