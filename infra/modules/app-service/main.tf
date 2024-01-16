@@ -2,7 +2,7 @@
 
 # Get VNET
 data "azurerm_virtual_network" "vnet" {
-  name = var.networking.vnet.name
+  name = "${var.naming["virtual-network"]}-${var.networking.vnet.name}"
   resource_group_name  = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
 }
 
