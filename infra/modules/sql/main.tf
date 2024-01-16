@@ -16,6 +16,12 @@ data "azurerm_key_vault_secret" "adminsqlpwd" {
     key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
+# Get VNET
+data "azurerm_virtual_network" "vnet" {
+  name = "${var.naming["virtual-network"]}-${var.networking.vnet.name}"
+  resource_group_name  = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
+}
+
 # get exists subnet id
 data "azurerm_subnet" "subnets" {
   for_each = var.networking.vnet.subnets
