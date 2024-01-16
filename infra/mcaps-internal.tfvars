@@ -40,7 +40,7 @@ networking = {
         address_prefix = ["10.0.3.0/24"]
       },
       appgw = {
-        name           = "AppGWSubnet"
+        name           = "appGWSubnet"
         address_prefix = ["10.0.4.0/24"]
       }
     }
