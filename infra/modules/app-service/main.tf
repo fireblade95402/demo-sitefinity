@@ -86,21 +86,6 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnetintegration
   subnet_id       = data.azurerm_subnet.subnets[var.web-app.subnet_key].id
 }
 
-#create private endpoint for app service to connect to sql server
-resource "azurerm_private_endpoint" "privateendpoint" {
-    name                = "${var.naming["private-endpoint"]}-${var.web-app.name}"
-    location            = var.location
-    resource_group_name = azurerm_app_service_plan.appserviceplan.resource_group_name
-    subnet_id           = data.azurerm_subnet.subnets[var.web-app.pep_subnet_key].id
-    private_service_connection {
-        name                           = "${var.web-app.name}-privateconnection"
-        private_connection_resource_id = azurerm_app_service.appservice.id
-        subresource_names              = ["sites"]
-        is_manual_connection = false
-    }
-}
-
-
 # create the private dns zones
 resource "azurerm_private_dns_zone" "privatedns" {
     name                = "privatelink.azurewebsites.net"
@@ -117,7 +102,25 @@ resource "azurerm_private_dns_zone_virtual_network_link" "privatednslink" {
         registration_enabled = false
 }
 
+#create private endpoint for app service to connect to sql server
+resource "azurerm_private_endpoint" "privateendpoint" {
+    name                = "${var.naming["private-endpoint"]}-${var.web-app.name}"
+    location            = var.location
+    resource_group_name = azurerm_app_service_plan.appserviceplan.resource_group_name
+    subnet_id           = data.azurerm_subnet.subnets[var.web-app.pep_subnet_key].id
 
+    private_dns_zone_group {
+    name = "privatednszonegroup"
+    private_dns_zone_ids = [azurerm_private_dns_zone.privatedns.id]
+    }
+
+    private_service_connection {
+        name                           = "${var.web-app.name}-privateconnection"
+        private_connection_resource_id = azurerm_app_service.appservice.id
+        subresource_names              = ["sites"]
+        is_manual_connection = false
+    }
+}
 
 # resource "azurerm_app_service_source_control" "deploy" {
 #   app_id   = azurerm_app_service.appservice.id
