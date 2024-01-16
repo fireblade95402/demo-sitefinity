@@ -179,6 +179,7 @@ appgw = {
     http_listener_name         = "http"
     backend_address_pool_name  = "AppService"
     backend_http_settings_name = "http"
+    priority                   = 1
   }
   public_ip_address = {
     name              = "sitefinity-mwg"
