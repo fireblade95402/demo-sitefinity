@@ -141,7 +141,7 @@ appgw = {
     port = 80
   }
   frontend_ip_configuration  = {
-    name                          = "sitefinity-mwg"
+    name                          = "frontend"
     private_ip_address_allocation = "Dynamic"
     subnet_key                    = "frontend"
   }
