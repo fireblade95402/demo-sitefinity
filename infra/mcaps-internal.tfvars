@@ -132,7 +132,7 @@ appgw = {
     tier     = "Standard_v2"
     capacity = 1
   }
-  gateway_ip_config = {
+  gateway_ip_configuration  = {
     name       = "sitefinity-mwg"
     subnet_key = "frontend"
   }
@@ -140,36 +140,45 @@ appgw = {
     name = "http"
     port = 80
   }
-  frontend_ip_config = {
+  frontend_ip_configuration  = {
     name                          = "sitefinity-mwg"
     private_ip_address_allocation = "Dynamic"
     subnet_key                    = "frontend"
   }
   backend_address_pool = {
-    name = "sitefinity-mwg"
+    name = "AppService"
   }
   backend_http_settings = {
-    name                  = "sitefinity-mwg"
+    name                  = "http"
     cookie_based_affinity = "Disabled"
     port                  = 80
     protocol              = "Http"
     request_timeout       = 20
-    path                  = "/"
+    probe_name            = "probe"
+    pick_host_name_from_backend_address = true
   }
+
+  probe = {
+    name                = "probe"
+    protocol            = "http"
+    path                = "/"
+    interval            = 30
+    timeout             = 30
+    unhealthy_threshold = 3
+  }
+
   http_listener = {
-    name                           = "sitefinity-mwg"
+    name                           = "http"
     frontend_port_name             = "http"
-    frontend_ip_configuration_name = "sitefinity-mwg"
-    ssl_certificate_name           = "sitefinity-mwg"
-    require_server_name_indication = true
+    frontend_ip_configuration_name = "frontend"
     protocol                       = "Http"
   }
   request_routing_rule = {
-    name                       = "sitefinity-mwg"
+    name                       = "http"
     rule_type                  = "Basic"
-    http_listener_name         = "sitefinity-mwg"
-    backend_address_pool_name  = "sitefinity-mwg"
-    backend_http_settings_name = "sitefinity-mwg"
+    http_listener_name         = "http"
+    backend_address_pool_name  = "AppService"
+    backend_http_settings_name = "http"
   }
   public_ip_address = {
     name              = "sitefinity-mwg"

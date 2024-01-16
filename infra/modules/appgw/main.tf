@@ -27,16 +27,16 @@ resource "azurerm_application_gateway" "appgw" {
     capacity = var.appgw.sku.capacity
   }
   gateway_ip_configuration {
-    name      = var.appgw.gateway_ip_config.name
-    subnet_id = data.azurerm_subnet.subnets[var.appgw.gateway_ip_config.subnet_key].id
+    name      = var.appgw.gateway_ip_configuration.name
+    subnet_id = data.azurerm_subnet.subnets[var.appgw.gateway_ip_configuration.subnet_key].id
   }
   frontend_port {
     name = var.appgw.frontend_port.name
     port = var.appgw.frontend_port.port
   }
   frontend_ip_configuration {
-    name                 = var.appgw.frontend_ip_config.name
-    public_ip_address_id = azurerm_public_ip.publicip.id
+    name                 = var.appgw.frontend_ip_configuration .name
+    public_ip_address_id = azurerm_public_ip.frontend_ip_configuration .id
   }
   backend_address_pool {
     name = var.appgw.backend_address_pool.name
@@ -55,6 +55,17 @@ resource "azurerm_application_gateway" "appgw" {
     frontend_ip_configuration_name = var.appgw.http_listener.name
     frontend_port_name             = var.appgw.http_listener.name
     protocol                       = var.appgw.http_listener.protocol
+  }
+
+  probe {
+    name                = var.appgw.probe.name
+    path                = var.appgw.probe.path
+    protocol            = var.appgw.probe.protocol
+    host                = "${var.web-app.name}.azurewebsites.net}"
+    interval            = var.appgw.probe.interval
+    timeout             = var.appgw.probe.timeout
+    unhealthy_threshold = var.appgw.probe.unhealthy_threshold
+    
   }
   request_routing_rule {
     name                       = var.appgw.request_routing_rule.name
