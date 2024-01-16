@@ -137,7 +137,7 @@ appgw = {
     subnet_key = "frontend"
   }
   frontend_port = {
-    name = "sitefinity-mwg"
+    name = "http"
     port = 80
   }
   frontend_ip_config = {
@@ -173,8 +173,8 @@ appgw = {
   }
   public_ip_address = {
     name              = "sitefinity-mwg"
-    sku               = "Standard"
-    allocation_method = "Static"
+    sku               = "Basic"
+    allocation_method = "Dynamic"
   }
 }
 

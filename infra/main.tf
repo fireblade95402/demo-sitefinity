@@ -70,14 +70,15 @@ module "sql" {
 
 
 # Call the appgw module -tbc
-# module "appgw" {
-#     source = "./modules/appgw"
-#     location = var.location
-#     resource-groups = var.resource-groups
-#     appgw =var.appgw 
-#     networking = var.networking
-#     naming = module.names.standard 
-# }
+module "appgw" {
+    source = "./modules/appgw"
+    location = var.location
+    resource-groups = var.resource-groups
+    appgw =var.appgw 
+    networking = var.networking
+    web-app = var.web-app
+    naming = module.names.standard 
+}
 
 
 

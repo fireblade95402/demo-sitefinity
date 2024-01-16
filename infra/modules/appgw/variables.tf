@@ -16,6 +16,11 @@ variable "networking" {
 
 }
 
+variable "web-app" {
+    description = "(Required) web-app to be created"  
+
+}
+
 variable "naming" {
     description = "(Required) Naming to be created"  
 

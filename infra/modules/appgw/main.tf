@@ -40,6 +40,7 @@ resource "azurerm_application_gateway" "appgw" {
   }
   backend_address_pool {
     name = var.appgw.backend_address_pool.name
+    fqdns = ["${var.web-app.name}.azurewebsites.net}"]
   }
   backend_http_settings {
     name                  = var.appgw.backend_http_settings.name
