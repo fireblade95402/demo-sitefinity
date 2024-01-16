@@ -45,7 +45,6 @@ resource "azurerm_application_gateway" "appgw" {
   backend_http_settings {
     name                  = var.appgw.backend_http_settings.name
     cookie_based_affinity = var.appgw.backend_http_settings.cookie_based_affinity
-    path                  = var.appgw.backend_http_settings.path
     port                  = var.appgw.backend_http_settings.port
     protocol              = var.appgw.backend_http_settings.protocol    
     request_timeout       = var.appgw.backend_http_settings.request_timeout
