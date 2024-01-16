@@ -8,7 +8,7 @@ module "names" {
 }
 
 #Resource Group Creation
-resource "azurerm_resource_group" "rg" {
+data "azurerm_resource_group" "rg" {
   for_each = var.resource-groups 
     name     = "${each.value.name}"
     location = var.location
