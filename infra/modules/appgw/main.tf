@@ -60,7 +60,7 @@ resource "azurerm_application_gateway" "appgw" {
     name                = var.appgw.probe.name
     path                = var.appgw.probe.path
     protocol            = var.appgw.probe.protocol
-    host                = "${var.web-app.name}.azurewebsites.net}"
+    host                = "${var.web-app.name}.azurewebsites.net"
     interval            = var.appgw.probe.interval
     timeout             = var.appgw.probe.timeout
     unhealthy_threshold = var.appgw.probe.unhealthy_threshold
