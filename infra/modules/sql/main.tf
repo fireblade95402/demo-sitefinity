@@ -86,21 +86,6 @@ resource "azurerm_private_endpoint" "privateendpoint" {
     }
 }
 
-
-#create private endpoint for app service to connect to sql server
-resource "azurerm_private_endpoint" "privateendpoint" {
-    name                = "${var.naming["private-endpoint"]}-${var.sql.name}"
-    location            = var.location
-    resource_group_name = azurerm_sql_server.sqlserver.resource_group_name
-    subnet_id           = data.azurerm_subnet.subnets[var.sql.pep_subnet_key].id
-    private_service_connection {
-        name                           = "${var.sql.name}-privateconnection"
-        private_connection_resource_id = azurerm_sql_server.sqlserver.id
-        subresource_names              = ["sqlServer"]
-        is_manual_connection = false
-    }
-}
-
 # create the sql database
 resource "azurerm_sql_database" "sqldb" {
     name                = "${var.sql.database.name}"
