@@ -158,7 +158,7 @@ appgw = {
   }
   http_listener = {
     name                           = "sitefinity-mwg"
-    frontend_port_name             = "sitefinity-mwg"
+    frontend_port_name             = "http"
     frontend_ip_configuration_name = "sitefinity-mwg"
     ssl_certificate_name           = "sitefinity-mwg"
     require_server_name_indication = true
