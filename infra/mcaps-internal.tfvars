@@ -184,7 +184,7 @@ appgw = {
   public_ip_address = {
     name              = "sitefinity-mwg"
     sku               = "Standard"
-    allocation_method = "Dynamic"
+    allocation_method = "Static"
   }
 }
 
