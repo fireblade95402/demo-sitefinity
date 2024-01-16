@@ -51,8 +51,8 @@ resource "azurerm_application_gateway" "appgw" {
   }
   http_listener {
     name                           = var.appgw.http_listener.name
-    frontend_ip_configuration_name = var.appgw.http_listener.name
-    frontend_port_name             = var.appgw.http_listener.name
+    frontend_ip_configuration_name = var.appgw.http_listener.frontend_ip_configuration
+    frontend_port_name             = var.appgw.http_listener.frontend_port_name
     protocol                       = var.appgw.http_listener.protocol
   }
 
