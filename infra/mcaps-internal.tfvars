@@ -153,10 +153,10 @@ appgw = {
     name = "AppService"
   }
   backend_http_settings = {
-    name                  = "http"
+    name                  = "https"
     cookie_based_affinity = "Disabled"
-    port                  = 80
-    protocol              = "Http"
+    port                  = 443
+    protocol              = "Https"
     request_timeout       = 20
     probe_name            = "probe"
     pick_host_name_from_backend_address = true
