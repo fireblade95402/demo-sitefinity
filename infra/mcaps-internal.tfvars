@@ -160,7 +160,7 @@ appgw = {
 
   probe = {
     name                = "probe"
-    protocol            = "http"
+    protocol            = "Http"
     path                = "/"
     interval            = 30
     timeout             = 30
