@@ -26,13 +26,13 @@ module "networking" {
 
 # Call the app service module
 module "app-service" {
-    depends_on = [ module.networking] #module.sql
+    depends_on = [ module.networking, module.sql]
     source = "./modules/app-service"
     location = var.location
     resource-groups = var.resource-groups
     web-app = var.web-app
     networking = var.networking
-    sql_connectionstring =  "tbc"  # module.sql.sql_connectionstring
+    sql_connectionstring =  module.sql.sql_connectionstring
     naming = module.names.standard
 }
 
