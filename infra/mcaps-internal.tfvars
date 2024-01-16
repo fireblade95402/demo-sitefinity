@@ -55,7 +55,7 @@ networking = {
 }
 
 web-app = {
-  name                    = "sitefinity-private-mcaps-internal"
+  name                    = "sitefinity-mcaps"
   resource_group_key      = "sitefinity"
   https_only              = true
   client_affinity_enabled = true
