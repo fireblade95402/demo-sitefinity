@@ -3,7 +3,7 @@
 # Get VNET
 data "azurerm_virtual_network" "vnet" {
   name = var.networking.vnet.name
-   resource_group_name  = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
+  resource_group_name  = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
 }
 
 # get exists subnet id

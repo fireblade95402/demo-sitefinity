@@ -28,22 +28,22 @@ resource "azurerm_subnet" "subnets" {
         }
 }
 
-# create the private dns zones
-resource "azurerm_private_dns_zone" "privatedns" {
-    for_each = var.networking.vnet.private_dns_zones
-    name                = each.value.name
-    resource_group_name = azurerm_virtual_network.vnet.resource_group_name
-}
+# # create the private dns zones
+# resource "azurerm_private_dns_zone" "privatedns" {
+#     for_each = var.networking.vnet.private_dns_zones
+#     name                = each.value.name
+#     resource_group_name = azurerm_virtual_network.vnet.resource_group_name
+# }
 
-# create the private dns zone links
-resource "azurerm_private_dns_zone_virtual_network_link" "privatednslink" {
-    depends_on = [ azurerm_private_dns_zone.privatedns ]
-    for_each = var.networking.vnet.private_dns_zones
-        name                  = each.value.domain
-        resource_group_name   = azurerm_virtual_network.vnet.resource_group_name
-        private_dns_zone_name = each.value.name
-        virtual_network_id    = azurerm_virtual_network.vnet.id
-}
+# # create the private dns zone links
+# resource "azurerm_private_dns_zone_virtual_network_link" "privatednslink" {
+#     depends_on = [ azurerm_private_dns_zone.privatedns ]
+#     for_each = var.networking.vnet.private_dns_zones
+#         name                  = each.value.domain
+#         resource_group_name   = azurerm_virtual_network.vnet.resource_group_name
+#         private_dns_zone_name = each.value.name
+#         virtual_network_id    = azurerm_virtual_network.vnet.id
+# }
 
 
 
