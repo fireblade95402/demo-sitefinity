@@ -49,6 +49,44 @@ resource "azurerm_sql_server" "sqlserver" {
 #     depends_on = [ azurerm_sql_database.sqldb ]
 # }
 
+
+# create the private dns zones
+resource "azurerm_private_dns_zone" "privatedns" {
+    name                = "privatelink.database.windows.net"
+    resource_group_name =  azurerm_sql_server.sqlserver.resource_group_name
+}
+
+# create the private dns zone links
+resource "azurerm_private_dns_zone_virtual_network_link" "privatednslink" {
+    depends_on = [ azurerm_private_dns_zone.privatedns ]
+        name                  = "${azurerm_sql_server.sqlserver.name}-dnslink"
+        resource_group_name   = azurerm_sql_server.sqlserver.resource_group_name
+        private_dns_zone_name = azurerm_private_dns_zone.privatedns.name
+        virtual_network_id    = data.azurerm_virtual_network.vnet.id
+        registration_enabled = false
+}
+
+#create private endpoint for app service to connect to sql server
+resource "azurerm_private_endpoint" "privateendpoint" {
+    name                = "${var.naming["private-endpoint"]}-${var.sql.name}"
+    location            = var.location
+    resource_group_name = azurerm_sql_server.sqlserver.resource_group_name
+    subnet_id           = data.azurerm_subnet.subnets[var.sql.pep_subnet_key].id
+
+    private_dns_zone_group {
+    name = "privatednszonegroup"
+    private_dns_zone_ids = [azurerm_private_dns_zone.privatedns.id]
+    }
+
+    private_service_connection {
+        name                           = "${var.sql.name}-privateconnection"
+        private_connection_resource_id = azurerm_sql_server.sqlserver.id
+        subresource_names              = ["sqlServer"]
+        is_manual_connection = false
+    }
+}
+
+
 #create private endpoint for app service to connect to sql server
 resource "azurerm_private_endpoint" "privateendpoint" {
     name                = "${var.naming["private-endpoint"]}-${var.sql.name}"
