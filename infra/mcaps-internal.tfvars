@@ -38,6 +38,10 @@ networking = {
       integration = {
         name           = "integrationSubnet"
         address_prefix = ["10.0.3.0/24"]
+      },
+      appgw = {
+        name           = "AppGWSubnet"
+        address_prefix = ["10.0.4.0/24"]
       }
     }
     private_dns_zones = {
@@ -134,7 +138,7 @@ appgw = {
   }
   gateway_ip_configuration  = {
     name       = "sitefinity-mwg"
-    subnet_key = "frontend"
+    subnet_key = "appgw"
   }
   frontend_port = {
     name = "http"
