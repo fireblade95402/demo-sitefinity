@@ -48,6 +48,10 @@ resource "azurerm_application_gateway" "appgw" {
     port                  = var.appgw.backend_http_settings.port
     protocol              = var.appgw.backend_http_settings.protocol    
     request_timeout       = var.appgw.backend_http_settings.request_timeout
+    pick_host_name_from_backend_address = var.appgw.backend_http_settings.pick_host_name_from_backend_address
+    
+    
+
   }
   http_listener {
     name                           = var.appgw.http_listener.name
