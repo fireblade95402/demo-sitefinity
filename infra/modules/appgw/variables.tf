@@ -25,3 +25,7 @@ variable "naming" {
     description = "(Required) Naming to be created"  
 
 }
+
+variable "identity" {
+    description = "(Required) UserAssignedIdentity for keyvault access by the appgw"  
+}

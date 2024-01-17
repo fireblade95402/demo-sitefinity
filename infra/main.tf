@@ -58,6 +58,7 @@ module "appgw" {
     networking = var.networking
     web-app = var.web-app
     naming = module.names.standard 
+    identity = var.identity
 }
 
 # Call the storage module

@@ -17,6 +17,12 @@ data "azurerm_subnet" "subnets" {
   resource_group_name  = "${var.resource-groups[var.networking.vnet.resource_group_key].name}"
 }
 
+#get user assigned identity
+data "azurerm_user_assigned_identity" "userassignedidentity" {
+  name                = var.identity.name
+  resource_group_name = var.identity.resource_group_name
+}
+
 resource "azurerm_application_gateway" "appgw" {
   name                = "${var.naming["application-gateway"]}-${var.appgw.name}"
   resource_group_name = "${var.resource-groups[var.appgw.resource_group_key].name}"
@@ -78,6 +84,15 @@ resource "azurerm_application_gateway" "appgw" {
     backend_http_settings_name = var.appgw.backend_http_settings.name
     priority = var.appgw.request_routing_rule.priority
 
+  }
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [
+      azurerm_user_assigned_identity.userassignedidentity.id
+    ]
+
+    
   }
 }
 

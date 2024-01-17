@@ -7,6 +7,12 @@ keyvault = {
   resource_group_name = "Shared"
 }
 
+// User assigned identity
+identity = {
+  name                = "sitefinity-managed-identity"
+  resource_group_name = "Shared"
+}
+
 
 resource-groups = {
   sitefinity = {

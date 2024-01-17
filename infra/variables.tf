@@ -3,11 +3,15 @@ variable "environment" {
 }
 
 variable "location" {
-  description = "(Required) location of the to be created"  
+  description = "(Required) location of the to be used"  
 }
 
 variable "keyvault" {
-  description = "(Required) keyvault to be created"  
+  description = "(Required) keyvault to be referenced"  
+}
+
+variable "identity" {
+  description = "(Required) UserAssignedIdentity for keyvault access by the appgw"  
 }
 
 variable "resource-groups" {
