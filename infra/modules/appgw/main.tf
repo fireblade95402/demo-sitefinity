@@ -92,10 +92,11 @@ resource "azurerm_application_gateway" "appgw" {
     name                       = request_routing_rule.value.name
     rule_type                  = request_routing_rule.value.rule_type
     http_listener_name         = request_routing_rule.value.http_listener_name
-    backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
-    backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
+    backend_address_pool_name  = lookup(request_routing_rule.value, "backend_address_pool_name", null)
+    backend_http_settings_name = lookup(request_routing_rule.value, "backend_http_settings_name", null)
     priority = request_routing_rule.value.priority
-    
+    redirect_configuration_name = lookup(request_routing_rule.value, "redirect_configuration_name", null)
+  
     
     }
   }
