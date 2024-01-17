@@ -36,17 +36,17 @@ module "networking" {
 #     naming = module.names.standard
 # }
 
-# # Call the sql module
-# module "sql" {
-#     depends_on = [ module.networking ]
-#     source = "./modules/sql"
-#     location = var.location
-#     resource-groups = var.resource-groups
-#     sql =var.sql
-#     networking = var.networking
-#     keyvault = var.keyvault 
-#     naming = module.names.standard   
-# }
+# Call the sql module
+module "sql" {
+    depends_on = [ module.networking ]
+    source = "./modules/sql"
+    location = var.location
+    resource-groups = var.resource-groups
+    sql =var.sql
+    networking = var.networking
+    keyvault = var.keyvault 
+    naming = module.names.standard   
+}
 
 # Call the storage module
 # module "storage" {

@@ -37,14 +37,8 @@ resource "azurerm_sql_server" "sqlserver" {
     location                     = var.location
     version                      = var.sql.version
     # use an entra user for the administator login
-
-    
-    
-
-
     administrator_login          = data.azurerm_key_vault_secret.adminsqllogin.value
     administrator_login_password = data.azurerm_key_vault_secret.adminsqlpwd.value
-
 }
 
 # # create the firewall rule for sql server
