@@ -206,7 +206,7 @@ appgw = {
       rule_type                  = "Basic"
       http_listener_name         = "http"
       backend_address_pool_name  = "AppService"
-      backend_http_settings_name = "http"
+      backend_http_settings_name = "https"
       priority                   = 10
     },
     https_routing_rule = {
