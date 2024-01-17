@@ -195,13 +195,25 @@ appgw = {
 
 
   request_routing_rule = {
-    name                       = "http"
-    rule_type                  = "Basic"
-    http_listener_name         = "http"
-    backend_address_pool_name  = "AppService"
-    backend_http_settings_name = "http"
-    priority                   = 1
+    http_routing_rule = {
+      name                       = "http"
+      rule_type                  = "Basic"
+      http_listener_name         = "http"
+      backend_address_pool_name  = "AppService"
+      backend_http_settings_name = "http"
+      priority                   = 10
+    },
+    https_routing_rule = {
+      name                       = "https"
+      rule_type                  = "Basic"
+      http_listener_name         = "https"
+      backend_address_pool_name  = "AppService"
+      backend_http_settings_name = "https"
+      priority                   = 20
+    }
   }
+
+
   public_ip_address = {
     name              = "sitefinity-mwg"
     sku               = "Standard"
