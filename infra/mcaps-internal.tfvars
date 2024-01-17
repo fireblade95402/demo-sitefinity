@@ -199,7 +199,7 @@ appgw = {
 
   ssl_certificate = {
     name     = "sitefinity-mwg"
-    keyvault_cert_id = "https://myvault-mwg.vault.azure.net/certificates/sitefinity/6108c6398f9a407bb0f7ba24e3f2d2f1"
+    keyvault_cert_id = "https://myvault-mwg.vault.azure.net/secrets/sitefinity/6108c6398f9a407bb0f7ba24e3f2d2f1"
 
   }
 }
