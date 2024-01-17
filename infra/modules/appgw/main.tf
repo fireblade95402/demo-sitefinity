@@ -107,7 +107,7 @@ resource "azurerm_application_gateway" "appgw" {
       target_listener_name = redirect_configuration.value.target_listener_name
       include_path = redirect_configuration.value.include_path
       include_query_string = redirect_configuration.value.include_query_string
-      target_url = redirect_configuration.value.target_url
+
     }
     
   }
