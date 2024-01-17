@@ -177,12 +177,23 @@ appgw = {
     unhealthy_threshold = 3
   }
 
-  http_listener = {
-    name                           = "http"
-    frontend_port_name             = "http"
-    frontend_ip_configuration_name = "frontend"
-    protocol                       = "Http"
+  listener = {
+    http_listener = {
+      name                           = "http"
+      frontend_ip_configuration_name = "frontend"
+      frontend_port_name             = "http"
+      protocol                       = "Http"
+    },
+    https_listener = {
+      name                           = "https"
+      frontend_ip_configuration_name = "frontend"
+      frontend_port_name             = "https"
+      protocol                       = "Https"
+      ssl_certificate_name           = "sitefinity-mwg"
+    }
   }
+
+
   request_routing_rule = {
     name                       = "http"
     rule_type                  = "Basic"

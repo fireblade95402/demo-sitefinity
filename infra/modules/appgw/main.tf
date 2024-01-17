@@ -59,12 +59,16 @@ resource "azurerm_application_gateway" "appgw" {
     
 
   }
-  http_listener {
-    name                           = var.appgw.http_listener.name
-    frontend_ip_configuration_name = var.appgw.http_listener.frontend_ip_configuration_name
-    frontend_port_name             = var.appgw.http_listener.frontend_port_name
-    protocol                       = var.appgw.http_listener.protocol
-  }
+  dynamic "http_listener" {
+        for_each = var.appgw.listener
+        content {
+          name                            = http_listener.value.name
+          frontend_ip_configuration_name  = http_listener.value.frontend_ip_configuration_name
+          frontend_port_name              = http_listener.value.frontend_port_name
+          protocol                        = http_listener.value.protocol
+          ssl_certificate_name            = lookup(http_listener.value, "ssl_certificate_name", null)
+        }
+      }
 
   probe {
     name                = var.appgw.probe.name
