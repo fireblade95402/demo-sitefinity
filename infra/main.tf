@@ -48,17 +48,17 @@ module "app-service" {
     naming = module.names.standard
 }
 
-# # Call the appgw module -tbc
-# module "appgw" {
-#     depends_on = [ module.networking, module.app-service ]
-#     source = "./modules/appgw"
-#     location = var.location
-#     resource-groups = var.resource-groups
-#     appgw =var.appgw 
-#     networking = var.networking
-#     web-app = var.web-app
-#     naming = module.names.standard 
-# }
+# Call the appgw module -tbc
+module "appgw" {
+    depends_on = [ module.networking, module.app-service ]
+    source = "./modules/appgw"
+    location = var.location
+    resource-groups = var.resource-groups
+    appgw =var.appgw 
+    networking = var.networking
+    web-app = var.web-app
+    naming = module.names.standard 
+}
 
 # Call the storage module
 # module "storage" {
