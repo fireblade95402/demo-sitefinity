@@ -236,6 +236,7 @@ appgw = {
     name              = "sitefinity-mwg"
     sku               = "Standard"
     allocation_method = "Static"
+    domain_name_label = "demo-sitefinity-mwg"
   }
 
   ssl_certificate = {

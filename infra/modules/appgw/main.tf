@@ -7,6 +7,7 @@ resource "azurerm_public_ip" "publicip" {
   location            = var.location
   allocation_method   = var.appgw.public_ip_address.allocation_method
   sku                 = var.appgw.public_ip_address.sku
+  domain_name_label = var.appgw.public_ip_address.domain_name_label
 }
 
 # get exists subnet id
