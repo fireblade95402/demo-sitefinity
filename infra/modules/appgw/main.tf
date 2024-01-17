@@ -98,7 +98,7 @@ resource "azurerm_application_gateway" "appgw" {
   ## add ssl certificate from keyvault with keyvault id
   ssl_certificate {
     name     = var.appgw.ssl_certificate.name
-    key_vault_secret_id = var.appgw.ssl_certificate.key_vault_cert_id
+    key_vault_secret_id = var.appgw.ssl_certificate.keyvault_cert_id
 
   }
 }
