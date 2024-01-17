@@ -37,6 +37,8 @@ resource "azurerm_sql_server" "sqlserver" {
     location                     = var.location
     version                      = var.sql.version
     # use an entra user for the administator login
+
+    
     
 
 
