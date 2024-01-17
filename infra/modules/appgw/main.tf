@@ -36,10 +36,15 @@ resource "azurerm_application_gateway" "appgw" {
     name      = var.appgw.gateway_ip_configuration.name
     subnet_id = data.azurerm_subnet.subnets[var.appgw.gateway_ip_configuration.subnet_key].id
   }
-  frontend_port {
-    name = var.appgw.frontend_port.name
-    port = var.appgw.frontend_port.port
+
+  dynamic "frontend_port" {
+    for_each = var.appgw.frontend_port
+    content {
+      name = frontend_port.value.name
+      port = frontend_port.value.port
+    }
   }
+
   frontend_ip_configuration {
     name                 = var.appgw.frontend_ip_configuration.name
     public_ip_address_id = azurerm_public_ip.publicip.id

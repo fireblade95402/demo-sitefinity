@@ -147,8 +147,14 @@ appgw = {
     subnet_key = "appgw"
   }
   frontend_port = {
-    name = "http"
-    port = 80
+    http = {
+      name = "http"
+      port = 80
+    },
+    https = {
+      name = "https"
+      port = 443
+    }
   }
   frontend_ip_configuration  = {
     name                          = "frontend"
