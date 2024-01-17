@@ -94,8 +94,25 @@ resource "azurerm_application_gateway" "appgw" {
     backend_address_pool_name  = request_routing_rule.value.backend_address_pool_name
     backend_http_settings_name = request_routing_rule.value.backend_http_settings_name
     priority = request_routing_rule.value.priority
+    
+    
     }
   }
+
+  dynamic "redirect_configuration" {
+    for_each = var.appgw.redirect_configuration
+    content {
+      name = redirect_configuration.value.name
+      redirect_type = redirect_configuration.value.redirect_type
+      target_listener_name = redirect_configuration.value.target_listener_name
+      include_path = redirect_configuration.value.include_path
+      include_query_string = redirect_configuration.value.include_query_string
+      target_url = redirect_configuration.value.target_url
+    }
+    
+  }
+
+
 
   identity {
     type = "UserAssigned"

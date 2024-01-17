@@ -219,6 +219,16 @@ appgw = {
     }
   }
 
+  redirect_configuration = {
+    name                       = "redirect"
+    redirect_type              = "Permanent"
+    target_listener_name       = "https"
+    target_listener_rule_name  = "http"
+    include_path               = false
+    include_query_string       = false
+    request_routing_rule_names = ["http"]
+  }
+
 
   public_ip_address = {
     name              = "sitefinity-mwg"
