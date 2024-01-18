@@ -2,11 +2,19 @@ name: Deploy Terraform Infra to Azure
 
 on:
   workflow_dispatch:
+    inputs:
+      ENVIRONMENT:
+        description: 'Environment to Deploy SiteFinity too'
+        required: true
+        type: choice
+        options:
+          - MCAPS-INTERNAL
+        
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: MCAPS-INTERNAL
+    environment: ${{ github.event.inputs.ENVIRONMENT }} 
     env:
       ARM_CLIENT_ID: ${{vars.ARM_CLIENT_ID}}
       ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
@@ -32,7 +40,7 @@ jobs:
         working-directory: infra
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve --var-file=${{vars.TFVARS_FILE}}
+        run: terraform apply -auto-approve --var-file=${{vars.TFVARS_FILE}} --var web-app.name="${{vars.WEB_APP_NAME}}"
         working-directory: infra
 
       - name: Terraform Output

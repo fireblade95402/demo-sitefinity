@@ -3,8 +3,16 @@ location    = "uksouth"
 
 // Reference existing keyvault
 keyvault = {
-  name                = "myvault-mwg"
-  resource_group_name = "Shared"
+  name                            = "sitefinity-kv"
+  resource_group_key              = "sitefinity"
+  sku_name                        = "standard"
+  pep_subnet_key                  = "integration"
+  soft_delete_retention_days      = 7
+  purge_protection_enabled        = false
+  enabled_for_disk_encryption     = false
+  enabled_for_deployment          = true
+  enabled_for_template_deployment = true
+  public_network_access_enabled   = false
 }
 
 // User assigned identity
@@ -92,10 +100,10 @@ web-app = {
 }
 
 sql = {
-  name                       = "sitefinity-private"
-  resource_group_key         = "sitefinity"
-  version                    = "12.0"
-  pep_subnet_key             = "integration"
+  name               = "sitefinity-private"
+  resource_group_key = "sitefinity"
+  version            = "12.0"
+  pep_subnet_key     = "integration"
   database = {
     name        = "sitefinity"
     collation   = "SQL_Latin1_General_CP1_CI_AS"
@@ -144,13 +152,13 @@ appgw = {
   }
 
   waf_configuration = {
-    enabled = true
-    firewall_mode = "Detection"
-    rule_set_type = "OWASP"
+    enabled          = true
+    firewall_mode    = "Detection"
+    rule_set_type    = "OWASP"
     rule_set_version = "3.0"
   }
 
-  gateway_ip_configuration  = {
+  gateway_ip_configuration = {
     name       = "sitefinity-mwg"
     subnet_key = "appgw"
   }
@@ -164,7 +172,7 @@ appgw = {
       port = 443
     }
   }
-  frontend_ip_configuration  = {
+  frontend_ip_configuration = {
     name                          = "frontend"
     private_ip_address_allocation = "Dynamic"
     subnet_key                    = "frontend"
@@ -173,12 +181,12 @@ appgw = {
     name = "AppService"
   }
   backend_http_settings = {
-    name                  = "https"
-    cookie_based_affinity = "Disabled"
-    port                  = 443
-    protocol              = "Https"
-    request_timeout       = 20
-    probe_name            = "probe"
+    name                                = "https"
+    cookie_based_affinity               = "Disabled"
+    port                                = 443
+    protocol                            = "Https"
+    request_timeout                     = 20
+    probe_name                          = "probe"
     pick_host_name_from_backend_address = true
   }
 
@@ -210,10 +218,10 @@ appgw = {
 
   request_routing_rule = {
     http_routing_rule = {
-      name                       = "http"
-      rule_type                  = "Basic"
-      http_listener_name         = "http"
-      priority                   = 10
+      name                        = "http"
+      rule_type                   = "Basic"
+      http_listener_name          = "http"
+      priority                    = 10
       redirect_configuration_name = "redirect"
     },
     https_routing_rule = {
@@ -247,7 +255,7 @@ appgw = {
   }
 
   ssl_certificate = {
-    name     = "sitefinity-mwg"
+    name             = "sitefinity-mwg"
     keyvault_cert_id = "https://myvault-mwg.vault.azure.net/secrets/sitefinity/6108c6398f9a407bb0f7ba24e3f2d2f1"
 
   }

@@ -24,42 +24,53 @@ module "networking" {
     naming = module.names.standard
 }
 
-# Call the sql module
-module "sql" {
+module "keyvault" {
     depends_on = [ module.networking ]
-    source = "./modules/sql"
+    source = "./modules/keyvault"
     location = var.location
     resource-groups = var.resource-groups
-    sql =var.sql
+    keyvault =var.keyvault 
     networking = var.networking
-    keyvault = var.keyvault 
-    naming = module.names.standard   
-}
-
-# Call the app service module
-module "app-service" {
-    depends_on = [ module.networking, module.sql]
-    source = "./modules/app-service"
-    location = var.location
-    resource-groups = var.resource-groups
-    web-app = var.web-app
-    networking = var.networking
-    sql_connectionstring =  module.sql.sql_connectionstring
     naming = module.names.standard
-}
-
-# Call the appgw module -tbc
-module "appgw" {
-    depends_on = [ module.networking, module.app-service ]
-    source = "./modules/appgw"
-    location = var.location
-    resource-groups = var.resource-groups
-    appgw =var.appgw 
-    networking = var.networking
-    web-app = var.web-app
-    naming = module.names.standard 
     identity = var.identity
 }
+
+# # Call the sql module
+# module "sql" {
+#     depends_on = [ module.networking ]
+#     source = "./modules/sql"
+#     location = var.location
+#     resource-groups = var.resource-groups
+#     sql =var.sql
+#     networking = var.networking
+#     keyvault = var.keyvault 
+#     naming = module.names.standard   
+# }
+
+# # Call the app service module
+# module "app-service" {
+#     depends_on = [ module.networking, module.sql]
+#     source = "./modules/app-service"
+#     location = var.location
+#     resource-groups = var.resource-groups
+#     web-app = var.web-app
+#     networking = var.networking
+#     sql_connectionstring =  module.sql.sql_connectionstring
+#     naming = module.names.standard
+# }
+
+# # Call the appgw module -tbc
+# module "appgw" {
+#     depends_on = [ module.networking, module.app-service ]
+#     source = "./modules/appgw"
+#     location = var.location
+#     resource-groups = var.resource-groups
+#     appgw =var.appgw 
+#     networking = var.networking
+#     web-app = var.web-app
+#     naming = module.names.standard 
+#     identity = var.identity
+# }
 
 # Call the storage module
 # module "storage" {
