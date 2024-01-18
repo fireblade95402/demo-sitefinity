@@ -10,6 +10,10 @@ on:
         description: 'Environment to Deploy SiteFinity too'
         required: true
         type: environment
+      WEB-APP-NAME:
+        description: test
+        type: string
+        default: {{vars.WEB_APP_NAME}}
 
 jobs:
   build:
