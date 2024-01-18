@@ -9,9 +9,7 @@ on:
       ENVIRONMENT:
         description: 'Environment to Deploy SiteFinity too'
         required: true
-        type: choice
-        options:
-          - MCAPS-INTERNAL
+        type: environment
       WEB_APP_NAME:
         description: 'Verify that Wweb App Name is correct'
         required: true
