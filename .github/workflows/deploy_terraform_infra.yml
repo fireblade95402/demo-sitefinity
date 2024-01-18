@@ -40,7 +40,7 @@ jobs:
         working-directory: infra
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve --var-file=${{vars.TFVARS_FILE}} --var web-app.name="${{vars.WEB_APP_NAME}}"
+        run: terraform apply -auto-approve --var-file=${{vars.TFVARS_FILE}} 
         working-directory: infra
 
       - name: Terraform Output
