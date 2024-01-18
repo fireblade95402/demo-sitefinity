@@ -5,12 +5,23 @@ name: Build and Deploy Sitefinity App
 
 on:
   workflow_dispatch:
+    inputs:
+      ENVIRONMENT:
+        description: 'Environment to Deploy SiteFinity too'
+        required: true
+        type: choice
+        options:
+          - MCAPS-INTERNAL
+      WEB_APP_NAME:
+        description: 'Verify that Wweb App Name is correct'
+        required: true
+        default: ${{var.WEB_APP_NAME}}
 
 jobs:
   build:
     runs-on: windows-latest
 
-    environment: MCAPS-INTERNAL
+    environment: ${{ github.event.inputs.ENVIRONMENT }} 
     steps:
       - uses: actions/checkout@v4
 
@@ -54,6 +65,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'sitefinity-mcaps'
+          app-name: ${{ github.event.inputs.WEB_APP_NAME }} 
           slot-name: 'Production'
           package: .
