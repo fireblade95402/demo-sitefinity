@@ -13,7 +13,7 @@ on:
       WEB-APP-NAME:
         description: test
         type: string
-        default: {{vars.WEB_APP_NAME}}
+        default: "{{vars.WEB_APP_NAME}}"
 
 jobs:
   build:
