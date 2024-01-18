@@ -15,7 +15,7 @@ on:
       WEB_APP_NAME:
         description: 'Verify that Wweb App Name is correct'
         required: true
-        default: ${{var.WEB_APP_NAME}}
+        default: ${{ var.WEB_APP_NAME }}
 
 jobs:
   build:
