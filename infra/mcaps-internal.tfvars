@@ -138,10 +138,18 @@ appgw = {
   name               = "sitefinity-mwg"
   resource_group_key = "sitefinity"
   sku = {
-    name     = "Standard_v2"
-    tier     = "Standard_v2"
+    name     = "WAF_v2"
+    tier     = "WAF_v2"
     capacity = 1
   }
+
+  waf_configuration = {
+    enabled = true
+    firewall_mode = "Detection"
+    rule_set_type = "OWASP"
+    rule_set_version = "3.0"
+  }
+
   gateway_ip_configuration  = {
     name       = "sitefinity-mwg"
     subnet_key = "appgw"

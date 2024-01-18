@@ -33,6 +33,15 @@ resource "azurerm_application_gateway" "appgw" {
     tier     = var.appgw.sku.tier
     capacity = var.appgw.sku.capacity
   }
+
+  waf_configuration {
+    firewall_mode = var.appgw.waf_configuration.firewall_mode
+    enabled = var.appgw.waf_configuration.enabled
+    rule_set_type = var.appgw.waf_configuration.rule_set_type
+    rule_set_version = var.appgw.waf_configuration.rule_set_version
+    
+  }
+
   gateway_ip_configuration {
     name      = var.appgw.gateway_ip_configuration.name
     subnet_id = data.azurerm_subnet.subnets[var.appgw.gateway_ip_configuration.subnet_key].id
