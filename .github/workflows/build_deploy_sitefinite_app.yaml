@@ -10,10 +10,6 @@ on:
         description: 'Environment to Deploy SiteFinity too'
         required: true
         type: environment
-      WEB_APP_NAME:
-        description: 'Verify that Wweb App Name is correct'
-        required: true
-        default: "${{ var.WEB_APP_NAME }}"
 
 jobs:
   build:
@@ -63,6 +59,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ github.event.inputs.WEB_APP_NAME }} 
+          app-name: ${{ var.WEB_APP_NAME }} 
           slot-name: 'Production'
           package: .
