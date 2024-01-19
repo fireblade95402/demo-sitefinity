@@ -6,20 +6,37 @@ keyvault = {
   name                            = "sitefinity-kv"
   resource_group_key              = "sitefinity"
   sku_name                        = "standard"
+  private_endpoint_enabled        = false
   pep_subnet_key                  = "integration"
   soft_delete_retention_days      = 7
   purge_protection_enabled        = false
   enabled_for_disk_encryption     = false
   enabled_for_deployment          = true
   enabled_for_template_deployment = true
-  public_network_access_enabled   = false
+  public_network_access_enabled   = true
+  certificates = {
+    cert1 = {
+      name         = "sitefinity"
+      file         = "./cert/sitefinity.pfx"
+    }
+  }
+  secrets = {
+    adminsqllogin = {
+      name         = "adminsqllogin"
+      value        = "sitefinityadmin"
+      content_type = "text/plain"
+    },
+    adminsqlpassword = {
+      name         = "adminsqlpassword"
+      value        = "Password123"
+      content_type = "text/plain"
+    },
+  }
+  
+
 }
 
-// User assigned identity
-identity = {
-  name                = "sitefinity-managed-identity"
-  resource_group_name = "Shared"
-}
+
 
 
 resource-groups = {
@@ -71,6 +88,13 @@ networking = {
     }
   }
 }
+
+// User assigned identity
+identity = {
+  name                = "sitefinity-managed-identity"
+  resource_group_key = "sitefinity"
+}
+
 
 web-app = {
   name                    = "sitefinity-mcaps"
@@ -211,7 +235,7 @@ appgw = {
       frontend_ip_configuration_name = "frontend"
       frontend_port_name             = "https"
       protocol                       = "Https"
-      ssl_certificate_name           = "sitefinity-mwg"
+      ssl_certificate_name           = "sitefinity"
     }
   }
 
@@ -255,8 +279,7 @@ appgw = {
   }
 
   ssl_certificate = {
-    name             = "sitefinity-mwg"
-    keyvault_cert_id = "https://myvault-mwg.vault.azure.net/secrets/sitefinity/6108c6398f9a407bb0f7ba24e3f2d2f1"
+    name             = "sitefinity"
 
   }
 }

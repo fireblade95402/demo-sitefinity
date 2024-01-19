@@ -3,7 +3,7 @@
 # get keyvault id
 data "azurerm_key_vault" "keyvault" {
     name                = var.keyvault.name
-    resource_group_name = var.keyvault.resource_group_name
+    resource_group_name = "${var.resource-groups[var.keyvault.resource_group_key].name}"
 }
 
 # get the sql admin password from keyvault
@@ -12,7 +12,7 @@ data "azurerm_key_vault_secret" "adminsqllogin" {
     key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 data "azurerm_key_vault_secret" "adminsqlpwd" {
-    name         = "adminsqlpwd"
+    name         = "adminsqlpassword"
     key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 

@@ -33,34 +33,36 @@ resource "azurerm_key_vault" "keyvault" {
     object_id = data.azurerm_client_config.current.object_id
 
     secret_permissions = [
-      "Get", "List"
+      "Get", "List", "Set", "Delete", "Backup", "Restore", "Recover", "Purge"
     ]
 
     certificate_permissions = [
-      "Get", "List"
+      "Get", "List", "Create", "Delete", "Import", "Update", "Recover", "Backup", "Restore"
     ]
   }
 }
 
-
 # create the private dns zones
 resource "azurerm_private_dns_zone" "privatedns" {
+    count              = var.keyvault.private_endpoint_enabled == true ? 1 : 0
     name                = "privatelink.vaultcore.azure.net"
     resource_group_name =  azurerm_key_vault.keyvault.resource_group_name
 }
 
 # create the private dns zone links
 resource "azurerm_private_dns_zone_virtual_network_link" "privatednslink" {
+    count              = var.keyvault.private_endpoint_enabled == true ? 1 : 0
     depends_on = [ azurerm_private_dns_zone.privatedns ]
         name                  = "${azurerm_key_vault.keyvault.name}-dnslink"
         resource_group_name   = azurerm_key_vault.keyvault.resource_group_name
-        private_dns_zone_name = azurerm_private_dns_zone.privatedns.name
+        private_dns_zone_name = azurerm_private_dns_zone.privatedns[0].name
         virtual_network_id    = data.azurerm_virtual_network.vnet.id
         registration_enabled = false
 }
 
 #create private endpoint for keyvault service to connect to sql server
 resource "azurerm_private_endpoint" "privateendpoint" {
+    count              = var.keyvault.private_endpoint_enabled == true ? 1 : 0
     name                = "${var.naming["private-endpoint"]}-${var.keyvault.name}"
     location            = var.location
     resource_group_name = azurerm_key_vault.keyvault.resource_group_name
@@ -68,7 +70,7 @@ resource "azurerm_private_endpoint" "privateendpoint" {
 
     private_dns_zone_group {
     name = "privatednszonegroup"
-    private_dns_zone_ids = [azurerm_private_dns_zone.privatedns.id]
+    private_dns_zone_ids = [azurerm_private_dns_zone.privatedns[0].id]
     }
 
     private_service_connection {
@@ -77,4 +79,27 @@ resource "azurerm_private_endpoint" "privateendpoint" {
         subresource_names              = ["vault"]
         is_manual_connection = false
     }
+}
+
+
+resource "azurerm_key_vault_certificate" "certificate" {
+  for_each = var.keyvault.certificates
+  name         = each.value.name
+  key_vault_id = azurerm_key_vault.keyvault.id
+  certificate  {
+    contents = filebase64(each.value.file)
+  }
+  depends_on = [ azurerm_key_vault.keyvault ]
+}
+
+
+
+# add secrets to keyvault
+resource "azurerm_key_vault_secret" "secrets" {
+  for_each = var.keyvault.secrets 
+  name         = each.value.name
+  # if value is not set, use random password
+  value        = each.value.value 
+  key_vault_id = azurerm_key_vault.keyvault.id
+  depends_on = [ azurerm_key_vault.keyvault ]
 }
