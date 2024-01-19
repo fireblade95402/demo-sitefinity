@@ -47,17 +47,17 @@ module "sql" {
     naming = module.names.standard   
 }
 
-# # Call the app service module
-# module "app-service" {
-#     depends_on = [ module.networking, module.sql]
-#     source = "./modules/app-service"
-#     location = var.location
-#     resource-groups = var.resource-groups
-#     web-app = var.web-app
-#     networking = var.networking
-#     sql_connectionstring =  module.sql.sql_connectionstring
-#     naming = module.names.standard
-# }
+# Call the app service module
+module "app-service" {
+    depends_on = [ module.networking, module.sql]
+    source = "./modules/app-service"
+    location = var.location
+    resource-groups = var.resource-groups
+    web-app = var.web-app
+    networking = var.networking
+    sql_connectionstring =  module.sql.sql_connectionstring
+    naming = module.names.standard
+}
 
 # Call the idenbtity module
 module "identity" {
@@ -70,21 +70,21 @@ module "identity" {
     keyvault = var.keyvault
 }
 
-# # Call the appgw module -tbc
-# module "appgw" {
-#     depends_on = [ module.networking, module.app-service, module.identity, module.keyvault ]
-#     source = "./modules/appgw"
-#     location = var.location
-#     resource-groups = var.resource-groups
-#     appgw =var.appgw 
-#     networking = var.networking
-#     web-app = var.web-app
-#     naming = module.names.standard 
-#     identity = var.identity
-#     keyvault = var.keyvault
-# }
+# Call the appgw module -tbc
+module "appgw" {
+    depends_on = [ module.networking, module.app-service, module.identity, module.keyvault ]
+    source = "./modules/appgw"
+    location = var.location
+    resource-groups = var.resource-groups
+    appgw =var.appgw 
+    networking = var.networking
+    web-app = var.web-app
+    naming = module.names.standard 
+    identity = var.identity
+    keyvault = var.keyvault
+}
 
-# Call the storage module
+# #Call the storage module
 # module "storage" {
 #     depends_on = [ module.networking ]
 #     source = "./modules/storage"
@@ -94,7 +94,7 @@ module "identity" {
 #     naming = module.names.standard 
 # }
 
-# Call the redis module
+# #Call the redis module
 # module "redis" {
 #     depends_on = [ module.networking ]
 #     source = "./modules/redis"
