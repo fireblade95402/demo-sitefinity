@@ -27,6 +27,15 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.15.3
+          
+      - name: Azure Blob Storage - Download Blob
+        uses: armanrahman22/azblob-download-action@v0.0.4
+        with:
+          storage-account-name: myfilesmwg
+          creds: '{"clientId":"${{ vars.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ vars.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ vars.ARM_TENANT_ID }}"}'
+          container-name: sitefinitytfstate
+          blob-name: sitefinity.pfx
+          download-path: ./infra/cert
 
       - name: List Files in Directory
         run: ls -R
