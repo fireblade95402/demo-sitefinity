@@ -36,7 +36,7 @@ keyvault = {
 
 }
 
-
+adminsqlpassword = ""
 
 
 resource-groups = {

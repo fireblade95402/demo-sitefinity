@@ -100,6 +100,6 @@ resource "azurerm_key_vault_secret" "secrets" {
   for_each = var.keyvault.secrets 
   name         = each.value.name
   # if value is not set, use random password
-  value        = each.value.value 
+  value        = each.value.name != "adminsqlpassword" ? each.value.value : locals.adminsqlpassword
   key_vault_id = azurerm_key_vault.keyvault.id
 }

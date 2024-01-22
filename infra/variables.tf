@@ -32,6 +32,12 @@ variable "sql" {
 
 }
 
+variable "adminsqlpassword" {
+  description = "(Required) adminsqlpassword to be created"  
+  default = ""
+  
+}
+
 variable "storage" {
   description = "(Required) storage to be created"  
 
