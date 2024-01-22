@@ -83,23 +83,23 @@ resource "azurerm_private_endpoint" "privateendpoint" {
 
 
 resource "azurerm_key_vault_certificate" "certificate" {
+  depends_on = [ azurerm_key_vault_access_policy.keyvaultaccesspolicy ]
   for_each = var.keyvault.certificates
   name         = each.value.name
   key_vault_id = azurerm_key_vault.keyvault.id
   certificate  {
     contents = filebase64(each.value.file)
   }
-  depends_on = [ azurerm_key_vault.keyvault ]
 }
 
 
 
 # add secrets to keyvault
 resource "azurerm_key_vault_secret" "secrets" {
+  depends_on = [ azurerm_key_vault_access_policy.keyvaultaccesspolicy ]
   for_each = var.keyvault.secrets 
   name         = each.value.name
   # if value is not set, use random password
   value        = each.value.value 
   key_vault_id = azurerm_key_vault.keyvault.id
-  depends_on = [ azurerm_key_vault.keyvault ]
 }
