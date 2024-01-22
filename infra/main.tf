@@ -33,6 +33,7 @@ module "keyvault" {
     networking = var.networking
     naming = module.names.standard
     identity = var.identity
+    adminsqlpassword = var.adminsqlpassword
 }
 
 # Call the sql module

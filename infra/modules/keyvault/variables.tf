@@ -11,6 +11,12 @@ variable "keyvault" {
 
 }
 
+variable "adminsqlpassword" {
+    description = "(Required) adminsqlpassword to be created"  
+    default = ""
+    
+}
+
 variable "networking" {
     description = "(Required) network to be created"  
 
