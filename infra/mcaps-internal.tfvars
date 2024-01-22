@@ -28,7 +28,7 @@ keyvault = {
     },
     adminsqlpassword = {
       name         = "adminsqlpassword"
-      value        = "Password123"
+      value        = "<passed from github secret>"
       content_type = "text/plain"
     },
   }
