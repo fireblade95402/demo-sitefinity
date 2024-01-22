@@ -24,9 +24,20 @@ module "networking" {
     naming = module.names.standard
 }
 
+module "keyvault" {
+    depends_on = [ module.networking ]
+    source = "./modules/keyvault"
+    location = var.location
+    resource-groups = var.resource-groups
+    keyvault =var.keyvault 
+    networking = var.networking
+    naming = module.names.standard
+    identity = var.identity
+}
+
 # Call the sql module
 module "sql" {
-    depends_on = [ module.networking ]
+    depends_on = [ module.keyvault ]
     source = "./modules/sql"
     location = var.location
     resource-groups = var.resource-groups
@@ -48,9 +59,20 @@ module "app-service" {
     naming = module.names.standard
 }
 
+# Call the idenbtity module
+module "identity" {
+    depends_on = [ module.networking, module.keyvault ]
+    source = "./modules/identity"
+    location = var.location
+    resource-groups = var.resource-groups
+    identity =var.identity 
+    naming = module.names.standard
+    keyvault = var.keyvault
+}
+
 # Call the appgw module -tbc
 module "appgw" {
-    depends_on = [ module.networking, module.app-service ]
+    depends_on = [ module.networking, module.app-service, module.identity, module.keyvault ]
     source = "./modules/appgw"
     location = var.location
     resource-groups = var.resource-groups
@@ -59,9 +81,10 @@ module "appgw" {
     web-app = var.web-app
     naming = module.names.standard 
     identity = var.identity
+    keyvault = var.keyvault
 }
 
-# Call the storage module
+# #Call the storage module
 # module "storage" {
 #     depends_on = [ module.networking ]
 #     source = "./modules/storage"
@@ -71,7 +94,7 @@ module "appgw" {
 #     naming = module.names.standard 
 # }
 
-# Call the redis module
+# #Call the redis module
 # module "redis" {
 #     depends_on = [ module.networking ]
 #     source = "./modules/redis"

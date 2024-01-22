@@ -1,3 +1,17 @@
+
+
+# get keyvault id
+data "azurerm_key_vault" "keyvault" {
+    name                = var.keyvault.name
+    resource_group_name = "${var.resource-groups[var.keyvault.resource_group_key].name}"
+}
+
+#get certificate id from keyvault
+data "azurerm_key_vault_certificate" "cert" {
+  name         = var.appgw.ssl_certificate.name
+  key_vault_id = data.azurerm_key_vault.keyvault.id
+}
+
 # Create Azure Application Gateway a
 
 #create public ip address for the application gateway
@@ -21,7 +35,7 @@ data "azurerm_subnet" "subnets" {
 #get user assigned identity
 data "azurerm_user_assigned_identity" "userassignedidentity" {
   name                = var.identity.name
-  resource_group_name = var.identity.resource_group_name
+  resource_group_name = "${var.resource-groups[var.identity.resource_group_key].name}"
 }
 
 resource "azurerm_application_gateway" "appgw" {
@@ -137,7 +151,7 @@ resource "azurerm_application_gateway" "appgw" {
   ## add ssl certificate from keyvault with keyvault id
   ssl_certificate {
     name     = var.appgw.ssl_certificate.name
-    key_vault_secret_id = var.appgw.ssl_certificate.keyvault_cert_id
+    key_vault_secret_id = data.azurerm_key_vault_certificate.cert.secret_id
 
   }
 }

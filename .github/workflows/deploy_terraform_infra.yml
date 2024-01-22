@@ -7,8 +7,6 @@ on:
         description: 'Environment to Deploy SiteFinity too'
         required: true
         type: environment
-
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -38,7 +36,7 @@ jobs:
         working-directory: infra
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve --var-file=${{vars.TFVARS_FILE}}
+        run: terraform apply -auto-approve --var-file=${{vars.TFVARS_FILE}} 
         working-directory: infra
 
       - name: Terraform Output

@@ -6,7 +6,7 @@ variable "resource-groups" {
     description = "(Required) Resource Group of the Resource Groups to be created"  
 }
 
-variable "appgw" {
+variable "keyvault" {
     description = "(Required) appgw to be created"  
 
 }
@@ -16,18 +16,8 @@ variable "networking" {
 
 }
 
-variable "web-app" {
-    description = "(Required) web-app to be created"  
-
-}
-
 variable "naming" {
     description = "(Required) Naming to be created"  
-
-}
-
-variable "keyvault" {
-    description = "(Required) keyvault to be used"  
 
 }
 
