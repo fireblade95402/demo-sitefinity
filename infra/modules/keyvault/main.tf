@@ -27,19 +27,19 @@ resource "azurerm_key_vault" "keyvault" {
   enabled_for_deployment          = var.keyvault.enabled_for_deployment
   enabled_for_template_deployment = var.keyvault.enabled_for_template_deployment
   public_network_access_enabled   = var.keyvault.public_network_access_enabled
+}
 
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
-
-    secret_permissions = [
-      "Get", "List", "Set", "Delete", "Backup", "Restore", "Recover", "Purge"
-    ]
-
-    certificate_permissions = [
-      "Get", "List", "Create", "Delete", "Import", "Update", "Recover", "Backup", "Restore"
-    ]
-  }
+#grant the identity access to the keyvault with get and list permissions for certificates
+resource "azurerm_key_vault_access_policy" "keyvaultaccesspolicy" {
+  key_vault_id = azurerm_key_vault.keyvault.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+  certificate_permissions = [
+    "Get", "List", "Create", "Delete", "Import", "Update", "Recover", "Backup", "Restore"
+  ]
+  secret_permissions = [
+   "Get", "List", "Set", "Delete", "Backup", "Restore", "Recover", "Purge"
+  ]
 }
 
 # create the private dns zones

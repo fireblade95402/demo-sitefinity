@@ -124,7 +124,7 @@ web-app = {
 }
 
 sql = {
-  name               = "sitefinity-private-2"
+  name               = "sitefinity-private"
   resource_group_key = "sitefinity"
   version            = "12.0"
   pep_subnet_key     = "integration"
