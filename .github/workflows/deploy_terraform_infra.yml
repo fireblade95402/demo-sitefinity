@@ -45,7 +45,7 @@ jobs:
         working-directory: infra
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve --var-file=${{vars.TFVARS_FILE}} 
+        run: terraform apply -auto-approve --var-file=${{vars.TFVARS_FILE}} --var "adminsqlpassword=${{secrets.ADMINSQLPASSWORD}}"
         working-directory: infra
 
       - name: Terraform Output
