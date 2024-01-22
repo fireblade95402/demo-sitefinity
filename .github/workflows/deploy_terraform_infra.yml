@@ -6,11 +6,7 @@ on:
       ENVIRONMENT:
         description: 'Environment to Deploy SiteFinity too'
         required: true
-        type: choice
-        options:
-          - MCAPS-INTERNAL
-        
-
+        type: environment
 jobs:
   deploy:
     runs-on: ubuntu-latest

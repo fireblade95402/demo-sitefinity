@@ -5,12 +5,16 @@ name: Build and Deploy Sitefinity App
 
 on:
   workflow_dispatch:
-
+    inputs:
+      ENVIRONMENT:
+        description: 'Environment to Deploy SiteFinity too'
+        required: true
+        type: environment
 jobs:
   build:
     runs-on: windows-latest
 
-    environment: MCAPS-INTERNAL
+    environment: ${{ github.event.inputs.ENVIRONMENT }} 
     steps:
       - uses: actions/checkout@v4
 
@@ -48,12 +52,12 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+          creds: '{"clientId":"${{ vars.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ vars.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ vars.ARM_TENANT_ID }}"}'
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'sitefinity-mcaps'
+          app-name: ${{ vars.WEB_APP_NAME }} 
           slot-name: 'Production'
           package: .
