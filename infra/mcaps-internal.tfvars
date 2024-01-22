@@ -17,7 +17,7 @@ keyvault = {
   certificates = {
     cert1 = {
       name         = "sitefinity"
-      file         = "./cert/sitefinity.pfx"
+      file         = "./sitefinity.pfx"
     }
   }
   secrets = {
