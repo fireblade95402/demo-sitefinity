@@ -35,7 +35,7 @@ jobs:
           creds: '{"clientId":"${{ vars.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ vars.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ vars.ARM_TENANT_ID }}"}'
           container-name: sitefinitytfstate
           blob-name: sitefinity.pfx
-          download-path: ./cert
+          download-path: .
 
       - name: List Files in Directory
         run: ls -R
