@@ -28,7 +28,7 @@ jobs:
         with:
           terraform_version: 0.15.3
           
-      - name: Azure Blob Storage - Download Blob
+      - name: Azure Blob Storage - Download Certificate
         uses: armanrahman22/azblob-download-action@v0.0.4
         with:
           storage-account-name: myfilesmwg
